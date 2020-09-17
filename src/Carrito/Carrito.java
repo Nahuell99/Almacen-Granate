@@ -93,8 +93,36 @@ public class Carrito {
 		this.entrega = entrega;
 	}
 	
-	public void agregarlstItemCarritoA(ItemCarrito lstItemCarritoA){
-		lstItemCarrito.add(lstItemCarritoA);
+	public boolean agregarlstItemCarritoA(ItemCarrito lstItemCarritoA){
+		int i = 0;
+        while (i < lstItemCarrito.size()) {
+            if (lstItemCarrito.get(i).getArticulo().equals(lstItemCarritoA.getArticulo())){
+            	lstItemCarrito.get(i).setCantidad(lstItemCarrito.get(i).getCantidad() + lstItemCarritoA.getCantidad());
+            	return false;
+            }
+            i++;
+        }
+        return lstItemCarrito.add(lstItemCarritoA);
+	}
+	
+	public boolean quitarlstItemCarritoA(ItemCarrito lstItemCarritoA) throws Exception{
+		int i = 0;
+        while (i < lstItemCarrito.size()) {
+            if (lstItemCarrito.get(i).getArticulo().equals(lstItemCarritoA.getArticulo())){
+            	if(lstItemCarrito.get(i).getCantidad() == lstItemCarritoA.getCantidad()) {
+            		return lstItemCarrito.remove(lstItemCarrito.get(i));
+            	}
+            	else if (lstItemCarrito.get(i).getCantidad() > lstItemCarritoA.getCantidad()) {
+            		lstItemCarrito.get(i).setCantidad(lstItemCarrito.get(i).getCantidad() - lstItemCarritoA.getCantidad());
+            		return true;
+            	}
+            	else {
+            		throw new Exception("No hay suficiente cantidad de productos en el carrito para eliminar");
+            	}
+            }
+            i++;
+        }
+        return true;
 	}
 	
 	public double calcularTotalCarrito() {
