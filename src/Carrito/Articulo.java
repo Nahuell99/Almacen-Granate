@@ -48,9 +48,68 @@ public class Articulo {
 		this.precio = precio;
 	}
 	
-	public boolean validarCodBarras(String codBarraNuevo) {
-		return (codBarraNuevo.length() == 13 || codBarraNuevo.length() == 8); 
-	}   //El tamaño del codigo tiene que ser de 13 u 8 caracteres
+	//El tamaño del codigo tiene que ser de 13 u 8 caracteres
+	public boolean validarCodBarras(String codBarra) {
+        String[] codigoString = codBarra.split("");
+        int[] codigoInt = new int[codigoString.length];
+        int sumaPares = 0, sumaImpares = 0;
+
+        if (codBarra.length() == 13) {
+
+            for (int i = 0; i < codigoString.length; i++) {
+
+                codigoInt[i] = Integer.parseInt(codigoString[i]);
+                if (i % 2 == 0 && i != 12) {
+                    sumaPares = sumaPares + codigoInt[i];
+                }
+                if (i % 2 == 1 && i != 13) {
+                    sumaImpares = sumaImpares + codigoInt[i];
+                }
+
+            }
+            int imparesParesSumados, contador = 0;
+            imparesParesSumados = sumaPares + sumaImpares * 3;
+
+            while (imparesParesSumados % 10 != 0) {
+                contador++;
+                imparesParesSumados++;
+            }
+
+            if (contador == codigoInt[12]) {
+                this.codBarra = codBarra;
+                System.out.println("Codigo valido");
+                return true;
+            } else {
+                System.out.println("Codigo invalido");
+                return false;
+            }
+
+        } else {
+            System.out.println("La longitud del codigo es invalida");
+            return false;
+        }
+    }
+	
+	public boolean equals(Articulo articulo) {
+        if(id==articulo.getId()||codBarra==articulo.getCodBarra()) {
+            return true;
+        }else {
+            return false;
+        }
+    }
+	
+	public boolean equals(String codBarraN) {
+        if(codBarra.equals(codBarraN)) {
+            return true;
+        }else {
+            return false;
+        }
+    }
+
+	@Override
+	public String toString() {
+		return "Articulo [id=" + id + ", nombre=" + nombre + ", codBarra=" + codBarra + ", precio=" + precio + "]";
+	}
 	
 	
 }
