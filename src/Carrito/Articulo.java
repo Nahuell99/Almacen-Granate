@@ -6,13 +6,16 @@ public class Articulo {
 	private String codBarra;
 	private double precio;
 	
-	public Articulo(int id, String nombre, String codBarra, double precio) { //throws Exception {
+	public Articulo(int id, String nombre, String codBarra, double precio) { // {
 		super();
 		this.id = id;
 		this.nombre = nombre;
 		this.precio = precio;
-		//if(!validarCodBarras(codBarra)) throw new Exception("Codigo de varra no validado del articulo: " + nombre);
-		this.setCodBarra(codBarra); 
+		try {
+			this.setCodBarra(codBarra);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} 
 		
 	}
 	
@@ -36,7 +39,10 @@ public class Articulo {
 		return codBarra;
 	}
 	
-	public void setCodBarra(String codBarra) {
+	public void setCodBarra(String codBarra) throws Exception{
+		if(validarCodBarras(codBarra)) {
+			throw new Exception("Codigo de varra no validado del articulo");
+		}
 		this.codBarra = codBarra;
 	}
 	

@@ -7,21 +7,23 @@ import java.util.ArrayList;
 import Carrito.Articulo;
 import Carrito.Carrito;
 import Carrito.Entrega;
+import Carrito.Envio;
 import Carrito.ItemCarrito;
 import Carrito.RetiroLocal;
 import Comercio.Cliente;
 import Comercio.Comercio;
 import Comercio.DiaRetiro;
+import Comercio.Ubicacion;
 
 public class TestAlmacen {
 
 	public static void main(String[] args) {
 		
 		int contadorID = 1;
-		Cliente cliente1 = new Cliente(1, "cliente1@gmail.com", "1165971568", 40L, 50L, "Nigro", "Emanuel", 30659878);
-		Cliente cliente2 = new Cliente(2, "cliente2@gmail.com", "1198765432", 90L, 30L, "Ponce", "Gaston", 42231767);
-		Cliente cliente3 = new Cliente(3, "cliente3@gmail.com", "1127916548", 10L, 70L, "Mauricio", "Rossi", 63987541);
-		Cliente cliente4 = new Cliente(4, "cliente4@gmail.com", "1168712536", 80L, 30L, "Federic", "Procs", 35426987);
+		Cliente cliente1 = new Cliente(2, "cliente1@gmail.com", "1165971568", 40L, 50L, "Nigro", "Emanuel", 30659878L,'m');
+		Cliente cliente2 = new Cliente(3, "cliente2@gmail.com", "1198765432", 90L, 30L, "Ponce", "Gaston", 42231767L,'f');
+		Cliente cliente3 = new Cliente(4, "cliente3@gmail.com", "1127916548", 10L, 70L, "Mauricio", "Rossi", 63987541L,'f');
+		Cliente cliente4 = new Cliente(5, "cliente4@gmail.com", "1168712536", 80L, 30L, "Federic", "Procs", 35426987L,'m');
 		
 		Comercio comercio = new Comercio(1,"Comercio@AlmacenGranate.com", "1123456879", 20L, 30L,"Almacen Granate", 30610252334L, 100, 40, 3,
 				20, 30);
@@ -39,10 +41,28 @@ public class TestAlmacen {
 		comercio.agregarLstArticulo(new Articulo(9, "levadura","7615596342360",30));
 		comercio.agregarLstArticulo(new Articulo(10, "levadura","5575951290141",30));
 		
-		comercio.agregarLstCarrito(new Carrito(1, LocalDate.of(2020, 03, 01), LocalTime.of(5, 30), false, 0, cliente1, comercio.traerArticuloCod("7388386942848"), 1,
-				new RetiroLocal(1, LocalDate.of(2020, 10, 25), true, LocalTime.of(18, 30))   ));
-		LocalDate a = LocalDate.of(2020, 12, 12);
 		
+		comercio.agregarLstCarrito(new Carrito(1, LocalDate.now(), LocalTime.now(), false, 0, cliente1, comercio.traerArticuloCod("7388386942848"), 1));
+		
+		comercio.traerCarritoId(1).agregarlstItemCarritoA(new ItemCarrito(comercio.traerArticuloCod("4268897902756"),5));
+		comercio.traerCarritoId(1).agregarlstItemCarritoA(new ItemCarrito(comercio.traerArticuloCod("4268897902756"),3));
+		comercio.traerCarritoId(1).agregarlstItemCarritoA(new ItemCarrito(comercio.traerArticuloCod("6382730434472"),7));
+		comercio.traerCarritoId(1).agregarlstItemCarritoA(new ItemCarrito(comercio.traerArticuloCod("5575951290141"),1));
+		try {
+			comercio.traerCarritoId(1).quitarlstItemCarritoA(new ItemCarrito(comercio.traerArticuloCod("6382730434472"),1));
+			comercio.traerCarritoId(1).quitarlstItemCarritoA(new ItemCarrito(comercio.traerArticuloCod("6382730434472"),3));
+			comercio.traerCarritoId(1).quitarlstItemCarritoA(new ItemCarrito(comercio.traerArticuloCod("6382730434472"),3));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		comercio.traerCarritoId(1).setEntrega(new Envio(comercio.traerCarritoId(1).getId(), LocalDate.now(), true, LocalTime.now(), LocalTime.of(18, 30), cliente1.getContacto().getUbicacion() ,comercio.getContacto().getUbicacion(), comercio.getCostoFijo(), comercio.getCostoPorKm()));
+		
+		
+		
+		
+		
+		
+		LocalDate a = LocalDate.of(2020, 12, 12);
 		System.out.println(a.getDayOfWeek());
 		
 		if(a.getDayOfWeek().getValue() == 5)

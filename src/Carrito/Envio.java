@@ -11,12 +11,13 @@ public class Envio extends Entrega {
 	private double costo;
 	private Ubicacion ubicacion;
 	
-	public Envio(int id, LocalDate fecha, boolean efectivo, LocalTime horaHasta, LocalTime horaDesde, double costo, double latitud, double longitud) {
+	public Envio(int id, LocalDate fecha, boolean efectivo, LocalTime horaHasta, LocalTime horaDesde, Ubicacion ubicacion, Ubicacion ubicacionC, double costoFijo , double costoPorKm) {
 		super(id, fecha, efectivo);
 		this.horaHasta = horaHasta;
 		this.horaDesde = horaDesde;
-		this.costo = costo;
-		this.ubicacion = new Ubicacion(latitud, longitud);
+		this.ubicacion = ubicacion;
+		this.setCosto(ubicacionC, costoFijo , costoPorKm);
+		
 	}
 
 	public LocalTime getHoraHasta() {
@@ -38,9 +39,10 @@ public class Envio extends Entrega {
 	public double getCosto() {
 		return costo;
 	}
-
-	public void setCosto(double costo) {
-		this.costo = costo;
+	
+	public void setCosto(Ubicacion ubicacionC, double costoFijo, double costoPorKm) {
+		double distancia =  distanciaCoord(ubicacion.getLatitud(), ubicacion.getLongitud(), ubicacionC.getLatitud(), ubicacionC.getLongitud());
+		this.costo = (distancia * costoPorKm) + costoFijo;
 	}
 
 	public Ubicacion getUbicacion() {
@@ -50,5 +52,18 @@ public class Envio extends Entrega {
 	public void setUbicacion(Ubicacion ubicacion) {
 		this.ubicacion = ubicacion;
 	}
+	
+	public double distanciaCoord(double lat1, double lng1, double lat2, double lng2) {
+		double radioTierra = 6371; //en kilómetros
+		double dLat = Math.toRadians(lat2 - lat1);
+		double dLng = Math.toRadians(lng2 - lng1);
+		double sindLat = Math.sin(dLat / 2);
+		double sindLng = Math.sin(dLng / 2);
+		double va1 =Math.pow(sindLat, 2)+Math.pow(sindLng, 2)*Math.cos(Math.toRadians(lat1))*
+		Math.cos(Math.toRadians(lat2));
+		double va2 = 2 * Math.atan2(Math.sqrt(va1), Math.sqrt(1 - va1));
+		return radioTierra * va2;
+	}
+	
 	
 }

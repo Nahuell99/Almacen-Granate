@@ -3,13 +3,19 @@ package Comercio;
 public class Cliente extends Actor{
 	private String apellido;
 	private String nombre;
-	private int dni;
+	private long dni;
+	private char genero;
 	
-	public Cliente(int id, String email, String celular, double latitud, double longitud, String apellido, String nombre, int dni) {
+	public Cliente(int id, String email, String celular, double latitud, double longitud, String apellido, String nombre, long dni, char genero) {
 		super(id, new Contacto( email,  celular,  latitud,  longitud));
 		this.apellido = apellido;
 		this.nombre = nombre;
-		this.dni = dni;
+		this.genero = genero;
+		try {
+			this.setDni(dni);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	public String getApellido() {
@@ -28,11 +34,14 @@ public class Cliente extends Actor{
 		this.nombre = nombre;
 	}
 
-	public int getDni() {
+	public long getDni() {
 		return dni;
 	}
 
-	public void setDni(int dni) {
+	public void setDni(long dni) throws Exception  {
+		if(! validarIdentificadorUnicoDNI(dni))  {
+			throw new Exception("Definitivamente Rick, es falso");
+		}
 		this.dni = dni;
 	}
 	

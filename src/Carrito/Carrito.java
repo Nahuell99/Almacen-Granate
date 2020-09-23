@@ -17,7 +17,20 @@ public class Carrito {
 	private Entrega entrega;
 	
 	public Carrito(int id, LocalDate fecha, LocalTime hora, boolean cerrado, double descuento, Cliente cliente,
-			Articulo articulo, int cantidad, Entrega entrega) {
+			Articulo articulo, int cantidad) {
+		super();
+		this.id = id;
+		this.fecha = fecha;
+		this.hora = hora;	
+		this.cerrado = cerrado;
+		this.descuento = descuento;
+		this.cliente = cliente;
+		this.lstItemCarrito.add(new ItemCarrito(articulo, cantidad) );
+		//this.entrega = envio;
+	}
+	
+	public Carrito(int id, LocalDate fecha, LocalTime hora, boolean cerrado, double descuento, Cliente cliente,
+			Articulo articulo, int cantidad, RetiroLocal entrega) {
 		super();
 		this.id = id;
 		this.fecha = fecha;
@@ -53,7 +66,7 @@ public class Carrito {
 		this.hora = hora;
 	}
 
-	public boolean isCerrado() {
+	public boolean getCerrado() {
 		return cerrado;
 	}
 
@@ -91,6 +104,7 @@ public class Carrito {
 
 	public void setEntrega(Entrega entrega) {
 		this.entrega = entrega;
+		setCerrado(true);
 	}
 	
 	public boolean agregarlstItemCarritoA(ItemCarrito lstItemCarritoA){
@@ -108,21 +122,25 @@ public class Carrito {
 	public boolean quitarlstItemCarritoA(ItemCarrito lstItemCarritoA) throws Exception{
 		int i = 0;
         while (i < lstItemCarrito.size()) {
+        	// BUSCO UNA COINCIDENCIA CON EL PRODUCTO
             if (lstItemCarrito.get(i).getArticulo().equals(lstItemCarritoA.getArticulo())){
+            	//SI LA CANTIDAD ES LA MISMA REMUEVO
             	if(lstItemCarrito.get(i).getCantidad() == lstItemCarritoA.getCantidad()) {
+            		
             		return lstItemCarrito.remove(lstItemCarrito.get(i));
-            	}
+            	}//SI ES MENOR LE RESTO
             	else if (lstItemCarrito.get(i).getCantidad() > lstItemCarritoA.getCantidad()) {
             		lstItemCarrito.get(i).setCantidad(lstItemCarrito.get(i).getCantidad() - lstItemCarritoA.getCantidad());
+            		
             		return true;
             	}
-            	else {
+            	else {//SI RESTO MAS CANTIDAD DE LA QUE TENGO TIRO EXCEPTION
             		throw new Exception("No hay suficiente cantidad de productos en el carrito para eliminar");
             	}
             }
             i++;
         }
-        return true;
+        throw new Exception("No se encuentra el producto en el carrito");
 	}
 	
 	public double calcularTotalCarrito() {
@@ -134,17 +152,11 @@ public class Carrito {
         return total;
     }
 	
-	public double distanciaCoord(double lat1, double lng1, double lat2, double lng2) {
-		double radioTierra = 6371; //en kilómetros
-		double dLat = Math.toRadians(lat2 - lat1);
-		double dLng = Math.toRadians(lng2 - lng1);
-		double sindLat = Math.sin(dLat / 2);
-		double sindLng = Math.sin(dLng / 2);
-		double va1 =Math.pow(sindLat, 2)+Math.pow(sindLng, 2)*Math.cos(Math.toRadians(lat1))*
-		Math.cos(Math.toRadians(lat2));
-		double va2 = 2 * Math.atan2(Math.sqrt(va1), Math.sqrt(1 - va1));
-		return radioTierra * va2;
-		}
+	
+	
+	
+	
+	
 	
 	
 }

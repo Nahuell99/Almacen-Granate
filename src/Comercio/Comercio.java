@@ -21,7 +21,11 @@ public class Comercio extends Actor{
 			int porcentajeDescuentoDia, int porcentajeDescuentoEfectivo) {
 		super(id, new Contacto( email,  celular,  latitud,  longitud));
 		this.nombreComercio = nombreComercio;
-		this.cuit = cuit;
+		try {
+			this.setCuit(cuit);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		this.costoFijo = costoFijo;
 		this.costoPorKm = costoPorKm;
 		this.diaDescuento = diaDescuento;
@@ -45,9 +49,10 @@ public class Comercio extends Actor{
 	}
 
 	public void setCuit(long cuit) throws Exception {
-		if( !((cuit > 30000000000L && cuit < 30999999999L) || (cuit > 33000000000L && cuit < 34999999999L)) ) {
-			throw new Exception("Los CUIT de empresas comienzan con 30, 33 o 34");
+		if(! validarIdentificadorUnicoCUIT(cuit) )  {
+			throw new Exception("Definitivamente Rick, es falso");
 		}
+		this.cuit = cuit;
 	}
 
 	public double getCostoFijo() {
@@ -125,6 +130,9 @@ public class Comercio extends Actor{
 		return null;
 	}
 
+	
+	
+	
 	@Override
 	public String toString() {
 		return "Comercio [nombreComercio=" + nombreComercio + ", cuit=" + cuit + ", costoFijo=" + costoFijo
