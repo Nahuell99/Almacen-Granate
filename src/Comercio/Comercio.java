@@ -17,9 +17,9 @@ public class Comercio extends Actor{
 	ArrayList<Carrito> lstCarrito;
 	ArrayList<Articulo> lstArticulo;
 	
-	public Comercio(int id, String email, String celular, double latitud, double longitud,String nombreComercio,long cuit, double costoFijo, double costoPorKm, int diaDescuento,
+	public Comercio(int id,Contacto contacto,String nombreComercio,long cuit, double costoFijo, double costoPorKm, int diaDescuento,
 			int porcentajeDescuentoDia, int porcentajeDescuentoEfectivo) {
-		super(id, new Contacto( email,  celular,  latitud,  longitud));
+		super(id, contacto);
 		this.nombreComercio = nombreComercio;
 		try {
 			this.setCuit(cuit);

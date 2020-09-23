@@ -40,8 +40,8 @@ public class Articulo {
 	}
 	
 	public void setCodBarra(String codBarra) throws Exception{
-		if(validarCodBarras(codBarra)) {
-			throw new Exception("Codigo de varra no validado del articulo");
+		if(!validarCodBarras(codBarra)) {
+			throw new Exception("Codigo de barra no validado del articulo");
 		}
 		this.codBarra = codBarra;
 	}

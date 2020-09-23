@@ -6,8 +6,8 @@ public class Cliente extends Actor{
 	private long dni;
 	private char genero;
 	
-	public Cliente(int id, String email, String celular, double latitud, double longitud, String apellido, String nombre, long dni, char genero) {
-		super(id, new Contacto( email,  celular,  latitud,  longitud));
+	public Cliente(int id, Contacto contacto, String apellido, String nombre, long dni, char genero) {
+		super(id, contacto);
 		this.apellido = apellido;
 		this.nombre = nombre;
 		this.genero = genero;

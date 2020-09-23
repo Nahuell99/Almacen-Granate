@@ -5,11 +5,11 @@ public class Contacto {
 	private String celular;
 	private Ubicacion ubicacion;
 	
-	public Contacto(String email, String celular, double latitud, double longitud) {
+	public Contacto(String email, String celular,Ubicacion ubicacion) {
 		super();
 		this.email = email;
 		this.celular = celular;
-		this.ubicacion = new Ubicacion(latitud, longitud);
+		this.ubicacion = ubicacion;
 	}
 
 	public String getEmail() {
