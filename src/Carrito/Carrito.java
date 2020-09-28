@@ -212,10 +212,8 @@ public class Carrito {
 	 */
 	public double calcularDescuentoCarrito(int diaDescuento, double porcentajeDescuentoDia,
 			double porcentajeDescuentoEfectivo) {
-
 		System.out.println("descuento dia " + calcularDescuentoDia(diaDescuento, porcentajeDescuentoDia));
 		System.out.println("descuento efectivo " + calcularDescuentoEfectivo(porcentajeDescuentoEfectivo));
-
 		if (entrega.isEfectivo()) {
 			if (calcularDescuentoDia(diaDescuento,
 					porcentajeDescuentoDia) >= calcularDescuentoEfectivo(porcentajeDescuentoEfectivo)) {
@@ -232,8 +230,7 @@ public class Carrito {
 	 * @return El total menos el descuento del carrito
 	 */
 	public double totalAPagarCarrito() {
-
-		return calcularTotalCarrito() - calcularDescuentoCarrito(LocalDate.now().getDayOfWeek().getValue(), 100L, 30L);
+		return calcularTotalCarrito() - calcularDescuentoCarrito(LocalDate.now().getDayOfWeek().getValue(), 101L, 30L);
 	}
 
 }
