@@ -36,10 +36,10 @@ public class TestAlmacen {
 
 		comercio.agregarDiaRetiro(new DiaRetiro(1, 1, LocalTime.of(5, 30), LocalTime.of(18, 30), 1));
 		try {
-			comercio.agregarLstArticulo(new Articulo(1, "jabón", "1234567890418", 25));
-			comercio.agregarLstArticulo(new Articulo(2, "sal", "6382730434473", 20));
-			comercio.agregarLstArticulo(new Articulo(3, "arroz", "9659376765214", 60));
-			comercio.agregarLstArticulo(new Articulo(4, "harina", "4950671922148", 10));
+			comercio.agregarLstArticulo(new Articulo(1, "jabón", "1234567890418", 30));
+			comercio.agregarLstArticulo(new Articulo(2, "sal", "6382730434473", 30));
+			comercio.agregarLstArticulo(new Articulo(3, "arroz", "9659376765214", 30));
+			comercio.agregarLstArticulo(new Articulo(4, "harina", "4950671922148", 30));
 			comercio.agregarLstArticulo(new Articulo(5, "lavandina", "7388386942842", 30));
 			comercio.agregarLstArticulo(new Articulo(6, "leche", "5752907913932", 30));
 			comercio.agregarLstArticulo(new Articulo(7, "aceite", "6046202617466", 30));
@@ -51,13 +51,13 @@ public class TestAlmacen {
 					new ItemCarrito(comercio.traerArticuloCod("1234567890418"), 1)));
 
 			comercio.traerCarritoId(1)
-					.agregarlstItemCarritoA(new ItemCarrito(comercio.traerArticuloCod("7615596342361"), 1));
+					.agregarlstItemCarritoA(new ItemCarrito(comercio.traerArticuloCod("7615596342361"), 2));
 			comercio.traerCarritoId(1)
-					.agregarlstItemCarritoA(new ItemCarrito(comercio.traerArticuloCod("6382730434473"), 1));
+					.agregarlstItemCarritoA(new ItemCarrito(comercio.traerArticuloCod("6382730434473"), 2));
 			comercio.traerCarritoId(1)
-					.agregarlstItemCarritoA(new ItemCarrito(comercio.traerArticuloCod("9659376765214"), 1));
+					.agregarlstItemCarritoA(new ItemCarrito(comercio.traerArticuloCod("9659376765214"), 2));
 			comercio.traerCarritoId(1)
-					.agregarlstItemCarritoA(new ItemCarrito(comercio.traerArticuloCod("4950671922148"), 1));
+					.agregarlstItemCarritoA(new ItemCarrito(comercio.traerArticuloCod("4950671922148"), 2));
 
 //			comercio.traerCarritoId(1)
 //					.quitarlstItemCarritoA(new ItemCarrito(comercio.traerArticuloCod("9659376765214"), 1));
@@ -68,12 +68,11 @@ public class TestAlmacen {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		comercio.traerCarritoId(1)
-				.setEntrega(new Envio(comercio.traerCarritoId(1).getId(), LocalDate.now(), true, LocalTime.now(),
+		comercio.traerCarritoId(1).setEntrega(new Envio(comercio.traerCarritoId(1).getId(), LocalDate.now(), true, LocalTime.now(),
 						LocalTime.of(18, 30), cliente1.getContacto().getUbicacion(),
 						comercio.getContacto().getUbicacion(), comercio.getCostoFijo(), comercio.getCostoPorKm()));
 
-		System.out.println(comercio.traerCarritoId(1).calcularTotalCarrito());
+		System.out.println("carrito sin descuento "+comercio.traerCarritoId(1).calcularTotalCarrito());
 
 		System.out.println(comercio.traerCarritoId(1).totalAPagarCarrito());
 
