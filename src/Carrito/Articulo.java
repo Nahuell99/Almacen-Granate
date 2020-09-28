@@ -6,17 +6,12 @@ public class Articulo {
 	private String codBarra;
 	private double precio;
 	
-	public Articulo(int id, String nombre, String codBarra, double precio) { // {
-		super();
+	public Articulo(int id, String nombre, String codBarra, double precio)throws Exception { // {
 		this.id = id;
 		this.nombre = nombre;
 		this.precio = precio;
-		try {
-			this.setCodBarra(codBarra);
-		} catch (Exception e) {
-			e.printStackTrace();
-		} 
-		
+		this.setCodBarra(codBarra);
+
 	}
 	
 	public int getId() {
@@ -83,7 +78,6 @@ public class Articulo {
 
             if (contador == codigoInt[12]) {
                 this.codBarra = codBarra;
-                System.out.println("Codigo valido");
                 return true;
             } else {
                 System.out.println("Codigo invalido");
