@@ -50,7 +50,7 @@ public class Comercio extends Actor{
 
 	public void setCuit(long cuit) throws Exception {
 		if(! validarIdentificadorUnicoCUIT(cuit) )  {
-			throw new Exception("Definitivamente Rick, es falso");
+			throw new Exception("CUIT Invalido");
 		}
 		this.cuit = cuit;
 	}

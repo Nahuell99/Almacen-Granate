@@ -110,10 +110,12 @@ public class Carrito {
 		while (i < lstItemCarrito.size()) {
 			if (lstItemCarrito.get(i).getArticulo().equals(lstItemCarritoA.getArticulo())) {
 				lstItemCarrito.get(i).setCantidad(lstItemCarrito.get(i).getCantidad() + lstItemCarritoA.getCantidad());
+				System.out.println("Cantidad sumada. Total:" + lstItemCarrito.get(i).getCantidad());
 				return false;
 			}
 			i++;
 		}
+		System.out.println("No existe, unidades agregadas.");
 		return lstItemCarrito.add(lstItemCarritoA);
 	}
 
@@ -124,13 +126,13 @@ public class Carrito {
 			if (lstItemCarrito.get(i).getArticulo().equals(lstItemCarritoA.getArticulo())) {
 				// SI LA CANTIDAD ES LA MISMA REMUEVO
 				if (lstItemCarrito.get(i).getCantidad() == lstItemCarritoA.getCantidad()) {
-
+					System.out.println("Todas las unidades eliminadas del carrito");
 					return lstItemCarrito.remove(lstItemCarrito.get(i));
 				} // SI ES MENOR LE RESTO
 				else if (lstItemCarrito.get(i).getCantidad() > lstItemCarritoA.getCantidad()) {
 					lstItemCarrito.get(i)
 							.setCantidad(lstItemCarrito.get(i).getCantidad() - lstItemCarritoA.getCantidad());
-
+					System.out.println("Unidades restadas. Quedan:" + lstItemCarrito.get(i).getCantidad() );
 					return true;
 				} else {// SI RESTO MAS CANTIDAD DE LA QUE TENGO TIRO EXCEPTION
 					throw new Exception("No hay suficiente cantidad de productos en el carrito para eliminar");
@@ -188,14 +190,7 @@ public class Carrito {
 	 */
 	public double calcularDescuentoEfectivo(double porcentajeDescuentoEfectivo) {
 		double descuento = 0;
-		double total = 0;
-
-		for (ItemCarrito iterador : lstItemCarrito) { // USE ESTE FOR EN VEZ DEL CALCULAR TOTAL CARRITO PORQUE NO ME
-														// FUNCIONABA
-			total += iterador.calcularSubTotalItem(); // POR CADA ITERACIÓN, SUMO EL SUBTOTAL DE LOS ITEMS AL ACUMULADOR
-		}
-		descuento = total * porcentajeDescuentoEfectivo / 100; // EL DESCUENTO SERIA EL TOTAL POR EL PORCENTAJE A
-																// DESCONTAR
+		descuento = calcularTotalCarrito() * porcentajeDescuentoEfectivo / 100; // EL DESCUENTO SERIA EL TOTAL POR EL PORCENTAJE A
 		return descuento;
 	}
 
@@ -220,7 +215,7 @@ public class Carrito {
 				return calcularDescuentoDia(diaDescuento, porcentajeDescuentoDia);
 			}
 		}
-		return calcularDescuentoEfectivo(porcentajeDescuentoEfectivo);
+		return calcularDescuentoDia(diaDescuento, porcentajeDescuentoDia);
 	}
 
 	/**
@@ -230,7 +225,7 @@ public class Carrito {
 	 * @return El total menos el descuento del carrito
 	 */
 	public double totalAPagarCarrito() {
-		return calcularTotalCarrito() - calcularDescuentoCarrito(LocalDate.now().getDayOfWeek().getValue(), 101L, 30L);
+		return calcularTotalCarrito() - calcularDescuentoCarrito(LocalDate.now().getDayOfWeek().getValue(), 100L, 42L);
 	}
 
 }

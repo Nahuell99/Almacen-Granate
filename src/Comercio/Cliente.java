@@ -6,16 +6,12 @@ public class Cliente extends Actor{
 	private long dni;
 	private char genero;
 	
-	public Cliente(int id, Contacto contacto, String apellido, String nombre, long dni, char genero) {
+	public Cliente(int id, Contacto contacto, String apellido, String nombre, long dni, char genero)throws Exception {
 		super(id, contacto);
 		this.apellido = apellido;
 		this.nombre = nombre;
 		this.genero = genero;
-		try {
-			this.setDni(dni);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		this.setDni(dni);
 	}
 
 	public String getApellido() {
@@ -40,7 +36,7 @@ public class Cliente extends Actor{
 
 	public void setDni(long dni) throws Exception  {
 		if(! validarIdentificadorUnicoDNI(dni))  {
-			throw new Exception("Definitivamente Rick, es falso");
+			throw new Exception("DNI invalido");
 		}
 		this.dni = dni;
 	}
