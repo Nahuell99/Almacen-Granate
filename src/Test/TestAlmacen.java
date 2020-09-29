@@ -69,7 +69,7 @@ public class TestAlmacen {
 //					.quitarlstItemCarritoA(new ItemCarrito(comercio.traerArticuloCod("9659376765214"), 3));
 
 			comercio.traerCarritoId(1)
-					.setEntrega(new Envio(comercio.traerCarritoId(1).getId(), LocalDate.now(), true, LocalTime.now(),
+					.setEntrega(new Envio(true ,comercio.traerCarritoId(1).getId(), LocalDate.now(), true, LocalTime.now(),
 							LocalTime.of(18, 30), cliente1.getContacto().getUbicacion(),
 							comercio.getContacto().getUbicacion(), comercio.getCostoFijo(), comercio.getCostoPorKm()));
 

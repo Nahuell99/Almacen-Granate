@@ -15,7 +15,7 @@ public class Carrito {
 	private Cliente cliente;
 	ArrayList<ItemCarrito> lstItemCarrito = new ArrayList<ItemCarrito>();
 	private Entrega entrega;
-
+	
 	public Carrito(int id, LocalDate fecha, LocalTime hora, boolean cerrado, double descuento, Cliente cliente,
 			ItemCarrito itemCarrito) {
 		this.id = id;
@@ -25,20 +25,9 @@ public class Carrito {
 		this.descuento = descuento;
 		this.cliente = cliente;
 		this.lstItemCarrito.add(itemCarrito);
-		// this.entrega = envio;
+		this.entrega = null;
 	}
 
-	public Carrito(int id, LocalDate fecha, LocalTime hora, boolean cerrado, double descuento, Cliente cliente,
-			Articulo articulo, int cantidad, RetiroLocal entrega) {
-		this.id = id;
-		this.fecha = fecha;
-		this.hora = hora;
-		this.cerrado = cerrado;
-		this.descuento = descuento;
-		this.cliente = cliente;
-		this.lstItemCarrito.add(new ItemCarrito(articulo, cantidad));
-		this.entrega = entrega;
-	}
 
 	public int getId() {
 		return id;
@@ -224,8 +213,15 @@ public class Carrito {
 	 * 
 	 * @return El total menos el descuento del carrito
 	 */
+	
+	
 	public double totalAPagarCarrito() {
-		return calcularTotalCarrito() - calcularDescuentoCarrito(LocalDate.now().getDayOfWeek().getValue(), 100L, 42L);
+		if(getEntrega().tipoEntrega) {
+			System.out.println("Costo "+((Envio)getEntrega()).getCosto());
+		}
+		
+	return calcularTotalCarrito() - calcularDescuentoCarrito(LocalDate.now().getDayOfWeek().getValue(), 100L, 42L);
+	
 	}
 
 }
