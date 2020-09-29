@@ -33,7 +33,7 @@ public class TestAlmacen {
 					new Contacto("fedeprocs@gmail.com", "15151611", new Ubicacion(123L, 823L)), "Federic", "Procs",
 					35426987L, 'm');
 
-			Comercio comercio = new Comercio(1, new Contacto("almacengranate", "15151651", new Ubicacion(22L, 255L)),
+			Comercio comercio = new Comercio(1, new Contacto("almacengranate", "15151651", new Ubicacion(23L, 255L)),
 					"Almacen Granate", 30610252334L, 100, 40, 3, 20, 30);
 
 			comercio.agregarDiaRetiro(new DiaRetiro(1, 1, LocalTime.of(5, 30), LocalTime.of(18, 30), 1));
