@@ -11,8 +11,8 @@ public class Envio extends Entrega {
 	private double costo;
 	private Ubicacion ubicacion;
 	
-	public Envio(int id, LocalDate fecha, boolean efectivo, LocalTime horaHasta, LocalTime horaDesde, Ubicacion ubicacion, Ubicacion ubicacionC, double costoFijo , double costoPorKm) {
-		super(id, fecha, efectivo);
+	public Envio(boolean tipoEntrega, int id,  LocalDate fecha, boolean efectivo, LocalTime horaHasta, LocalTime horaDesde, Ubicacion ubicacion, Ubicacion ubicacionC, double costoFijo , double costoPorKm) {
+		super(tipoEntrega,id, fecha, efectivo);
 		this.horaHasta = horaHasta;
 		this.horaDesde = horaDesde;
 		this.ubicacion = ubicacion;
@@ -63,7 +63,8 @@ public class Envio extends Entrega {
 		Math.cos(Math.toRadians(lat2));
 		double va2 = 2 * Math.atan2(Math.sqrt(va1), Math.sqrt(1 - va1));
 		return radioTierra * va2;
-	}
+		}
+
 	
 	
 }

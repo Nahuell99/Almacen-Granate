@@ -102,8 +102,8 @@ public class Comercio extends Actor{
 	public void agregarLstCarrito(Carrito lstCarritoA){
 		lstCarrito.add(lstCarritoA);
 	}
-	public void agregarLstArticulo(Articulo lstArticuloA){
-		lstArticulo.add(lstArticuloA);
+	public void agregarLstArticulo(int id, String nombre,String codBarra, double precio)throws Exception{
+		lstArticulo.add(new Articulo(id, nombre, codBarra, precio));
 	}
 
 	public Articulo traerArticuloCod (String codBarra) {
@@ -141,6 +141,8 @@ public class Comercio extends Actor{
 				+ ", lstDiaRetiro=" + lstDiaRetiro + ", lstCarrito=" + lstCarrito + ", lstArticulo=" + lstArticulo
 				+ "]";
 	}
+
+	
 	
 	
 	
