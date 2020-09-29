@@ -15,7 +15,7 @@ public class Carrito {
 	private Cliente cliente;
 	ArrayList<ItemCarrito> lstItemCarrito = new ArrayList<ItemCarrito>();
 	private Entrega entrega;
-	
+
 	public Carrito(int id, LocalDate fecha, LocalTime hora, boolean cerrado, double descuento, Cliente cliente,
 			ItemCarrito itemCarrito) {
 		this.id = id;
@@ -27,7 +27,6 @@ public class Carrito {
 		this.lstItemCarrito.add(itemCarrito);
 		this.entrega = null;
 	}
-
 
 	public int getId() {
 		return id;
@@ -121,7 +120,7 @@ public class Carrito {
 				else if (lstItemCarrito.get(i).getCantidad() > lstItemCarritoA.getCantidad()) {
 					lstItemCarrito.get(i)
 							.setCantidad(lstItemCarrito.get(i).getCantidad() - lstItemCarritoA.getCantidad());
-					System.out.println("Unidades restadas. Quedan:" + lstItemCarrito.get(i).getCantidad() );
+					System.out.println("Unidades restadas. Quedan:" + lstItemCarrito.get(i).getCantidad());
 					return true;
 				} else {// SI RESTO MAS CANTIDAD DE LA QUE TENGO TIRO EXCEPTION
 					throw new Exception("No hay suficiente cantidad de productos en el carrito para eliminar");
@@ -179,7 +178,8 @@ public class Carrito {
 	 */
 	public double calcularDescuentoEfectivo(double porcentajeDescuentoEfectivo) {
 		double descuento = 0;
-		descuento = calcularTotalCarrito() * porcentajeDescuentoEfectivo / 100; // EL DESCUENTO SERIA EL TOTAL POR EL PORCENTAJE A
+		descuento = calcularTotalCarrito() * porcentajeDescuentoEfectivo / 100; // EL DESCUENTO SERIA EL TOTAL POR EL
+																				// PORCENTAJE A
 		return descuento;
 	}
 
@@ -198,13 +198,15 @@ public class Carrito {
 			double porcentajeDescuentoEfectivo) {
 		System.out.println("descuento dia " + calcularDescuentoDia(diaDescuento, porcentajeDescuentoDia));
 		System.out.println("descuento efectivo " + calcularDescuentoEfectivo(porcentajeDescuentoEfectivo));
-		if (entrega.isEfectivo()) {
-			if (calcularDescuentoDia(diaDescuento,
-					porcentajeDescuentoDia) >= calcularDescuentoEfectivo(porcentajeDescuentoEfectivo)) {
-				return calcularDescuentoDia(diaDescuento, porcentajeDescuentoDia);
+		if (entrega != null) {
+			if (entrega.isEfectivo()) {
+				if (calcularDescuentoDia(diaDescuento,
+						porcentajeDescuentoDia) >= calcularDescuentoEfectivo(porcentajeDescuentoEfectivo)) {
+					return calcularDescuentoDia(diaDescuento, porcentajeDescuentoDia);
+				}
 			}
 		}
-		return calcularDescuentoDia(diaDescuento, porcentajeDescuentoDia);
+		return  calcularDescuentoEfectivo(porcentajeDescuentoEfectivo);
 	}
 
 	/**
@@ -213,15 +215,14 @@ public class Carrito {
 	 * 
 	 * @return El total menos el descuento del carrito
 	 */
-	
-	
+
 	public double totalAPagarCarrito() {
-		if(getEntrega().tipoEntrega) {
-			System.out.println("Costo "+((Envio)getEntrega()).getCosto());
+		if (entrega instanceof Envio) {
+			System.out.println("Costo envio: " + ((Envio) getEntrega()).getCosto());
+			return calcularTotalCarrito()- calcularDescuentoCarrito(LocalDate.now().getDayOfWeek().getValue(), 100L, 42L) + ((Envio) getEntrega()).getCosto();
 		}
-		
-	return calcularTotalCarrito() - calcularDescuentoCarrito(LocalDate.now().getDayOfWeek().getValue(), 100L, 42L);
-	
+		return calcularTotalCarrito() - calcularDescuentoCarrito(LocalDate.now().getDayOfWeek().getValue(), 100L, 42L);
+
 	}
 
 }

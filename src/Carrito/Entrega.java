@@ -24,6 +24,7 @@ public abstract class Entrega {
 		this.tipoEntrega = tipoEntrega;
 	}
 
+
 	
 	public int getId() {
 		return id;

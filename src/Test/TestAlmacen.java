@@ -75,7 +75,8 @@ public class TestAlmacen {
 
 			System.out.println("carrito sin descuento " + comercio.traerCarritoId(1).calcularTotalCarrito());
 
-			System.out.println(comercio.traerCarritoId(1).totalAPagarCarrito());
+			System.out.println("Total a pagar carrito: " + comercio.traerCarritoId(1).totalAPagarCarrito());
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
