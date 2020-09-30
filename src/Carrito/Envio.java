@@ -64,7 +64,6 @@ public class Envio extends Entrega {
 		double va2 = 2 * Math.atan2(Math.sqrt(va1), Math.sqrt(1 - va1));
 		return radioTierra * va2;
 		}
-
 	
 	
 }

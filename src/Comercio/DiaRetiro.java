@@ -10,7 +10,6 @@ public class DiaRetiro {
 	private int intervalo;
 
 	public DiaRetiro(int id, int diaSemana, LocalTime horaDesde, LocalTime horaHasta, int intervalo) {
-		super();
 		this.id = id;
 		this.diaSemana = diaSemana;
 		this.horaDesde = horaDesde;

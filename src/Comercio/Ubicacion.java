@@ -5,7 +5,7 @@ public class Ubicacion {
 	private double longitud;
 	
 	public Ubicacion(double latitud, double longitud) {
-		super();
+
 		this.latitud = latitud;
 		this.longitud = longitud;
 	}

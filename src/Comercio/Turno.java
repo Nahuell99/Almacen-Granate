@@ -9,7 +9,7 @@ public class Turno {
 	private boolean ocupado;
 	
 	public Turno(LocalDate dia, LocalTime hora, boolean ocupado) {
-		super();
+
 		this.dia = dia;
 		this.hora = hora;
 		this.ocupado = ocupado;

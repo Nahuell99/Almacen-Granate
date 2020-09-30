@@ -2,18 +2,13 @@ package Test;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.ArrayList;
 
-import Carrito.Articulo;
-import Carrito.Carrito;
-import Carrito.Entrega;
 import Carrito.Envio;
-import Carrito.ItemCarrito;
-import Carrito.RetiroLocal;
+
 import Comercio.Cliente;
 import Comercio.Comercio;
 import Comercio.Contacto;
-import Comercio.DiaRetiro;
+
 import Comercio.Ubicacion;
 
 public class TestAlmacen {
@@ -21,22 +16,25 @@ public class TestAlmacen {
 	public static void main(String[] args) {
 
 		try {
-			Cliente cliente1 = new Cliente(2, new Contacto("emanigro@gmail.com", "53613131", new Ubicacion(515L, 154L)),
+			Comercio comercio = new Comercio(1, new Contacto("almacengranate", "15151651", new Ubicacion(-38.5545, -58.7396)),
+					"Almacen Granate", 30610252334L, 100, 5, 3, 20, 30);
+
+			Cliente cliente1 = new Cliente(2, new Contacto("emanigro@gmail.com", "53613131", new Ubicacion(-38.0055, -57.5426)),
 					"Nigro", "Emanuel", 30659878L, 'm');
-			Cliente cliente2 = new Cliente(3,
+			
+			
+			Cliente cliente2 = comercio.nuevoCliente(3,
 					new Contacto("nahuelponce@gmail.com", "1564165156", new Ubicacion(2312L, 2312L)), "Ponce", "Gaston",
 					42231767L, 'f');
-			Cliente cliente3 = new Cliente(4,
+			Cliente cliente3 = comercio.nuevoCliente(4,
 					new Contacto("maurirossi@gmail.com", "1532326323", new Ubicacion(315L, 25L)), "Mauricio", "Rossi",
 					63987541L, 'f');
-			Cliente cliente4 = new Cliente(5,
+			Cliente cliente4 = comercio.nuevoCliente(5,
 					new Contacto("fedeprocs@gmail.com", "15151611", new Ubicacion(123L, 823L)), "Federic", "Procs",
 					35426987L, 'm');
 
-			Comercio comercio = new Comercio(1, new Contacto("almacengranate", "15151651", new Ubicacion(23L, 255L)),
-					"Almacen Granate", 30610252334L, 100, 40, 3, 20, 30);
-
-			comercio.agregarDiaRetiro(new DiaRetiro(1, 1, LocalTime.of(5, 30), LocalTime.of(18, 30), 1));
+			
+			comercio.agregarDiaRetiro(1, 1, LocalTime.of(5, 30), LocalTime.of(18, 30), 1);
 
 			comercio.agregarLstArticulo(1, "jabón", "1234567890418", 30);
 			comercio.agregarLstArticulo(2, "sal", "6382730434473", 30);
@@ -49,17 +47,13 @@ public class TestAlmacen {
 			comercio.agregarLstArticulo(9, "levadura", "7615596342361", 30);
 			comercio.agregarLstArticulo(10, "levadura", "5575951290145", 30);
 
-			comercio.agregarLstCarrito(new Carrito(1, LocalDate.now(), LocalTime.now(), false, 0, cliente1,
-					new ItemCarrito(comercio.traerArticuloCod("1234567890418"), 1)));
+			comercio.agregarLstCarrito(1, LocalDate.now(), LocalTime.now(), false, 0, cliente1);
 
-			comercio.traerCarritoId(1)
-					.agregarlstItemCarritoA(new ItemCarrito(comercio.traerArticuloCod("7615596342361"), 2));
-			comercio.traerCarritoId(1)
-					.agregarlstItemCarritoA(new ItemCarrito(comercio.traerArticuloCod("6382730434473"), 2));
-			comercio.traerCarritoId(1)
-					.agregarlstItemCarritoA(new ItemCarrito(comercio.traerArticuloCod("9659376765214"), 2));
-			comercio.traerCarritoId(1)
-					.agregarlstItemCarritoA(new ItemCarrito(comercio.traerArticuloCod("4950671922148"), 2));
+			comercio.traerCarritoId(1).agregarlstItemCarritoA(comercio.traerArticuloCod("7615596342361"), 2);
+			comercio.traerCarritoId(1).agregarlstItemCarritoA(comercio.traerArticuloCod("6382730434473"), 2);
+			comercio.traerCarritoId(1).agregarlstItemCarritoA(comercio.traerArticuloCod("9659376765214"), 2);
+			comercio.traerCarritoId(1).agregarlstItemCarritoA(comercio.traerArticuloCod("4950671922148"), 2);
+			comercio.traerCarritoId(1).agregarlstItemCarritoA(comercio.traerArticuloCod("4950671922148"), 5);
 
 //			comercio.traerCarritoId(1)
 //					.quitarlstItemCarritoA(new ItemCarrito(comercio.traerArticuloCod("9659376765214"), 1));
@@ -69,14 +63,11 @@ public class TestAlmacen {
 //					.quitarlstItemCarritoA(new ItemCarrito(comercio.traerArticuloCod("9659376765214"), 3));
 
 			comercio.traerCarritoId(1)
-					.setEntrega(new Envio(true ,comercio.traerCarritoId(1).getId(), LocalDate.now(), true, LocalTime.now(),
-							LocalTime.of(18, 30), cliente1.getContacto().getUbicacion(),
+					.setEntrega(new Envio(true, comercio.traerCarritoId(1).getId(), LocalDate.now(), true,
+							LocalTime.now(), LocalTime.of(18, 30), cliente1.getContacto().getUbicacion(),
 							comercio.getContacto().getUbicacion(), comercio.getCostoFijo(), comercio.getCostoPorKm()));
 
-			System.out.println("carrito sin descuento " + comercio.traerCarritoId(1).calcularTotalCarrito());
 
-			System.out.println("Total a pagar carrito: " + comercio.traerCarritoId(1).totalAPagarCarrito());
-			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
