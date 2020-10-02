@@ -146,14 +146,14 @@ public class Carrito {
 
 				// SI LA CANTIDAD ES LA MISMA REMUEVO, SI ES MENOR LE RESTO
 				if (lstItemCarrito.get(i).getCantidad() == cantidad) {
-					System.out.println("Misma cantidad de articulo, eliminado: " + articuloNuevo);
+					System.out.println("Misma cantidad de articulos, eliminado: " + articuloNuevo);
 					lstItemCarrito.remove(lstItemCarrito.get(i));
 					itemRemovido = true;
 				}
 				// SI LA CANTIDAD ES MENOR LA RESTO
 				else if (lstItemCarrito.get(i).getCantidad() > cantidad) {
 					lstItemCarrito.get(i).setCantidad(lstItemCarrito.get(i).getCantidad() - cantidad);
-					System.out.println("Restado articulo " + lstItemCarrito.get(i).getCantidad() + " del carrito");
+					System.out.println("Restado "+articuloNuevo + " del carrito");
 
 					itemRemovido = true;
 				}
