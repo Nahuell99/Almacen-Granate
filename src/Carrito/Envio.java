@@ -11,8 +11,8 @@ public class Envio extends Entrega {
 	private double costo;
 	private Ubicacion ubicacion;
 	
-	public Envio(boolean tipoEntrega, int id,  LocalDate fecha, boolean efectivo, LocalTime horaHasta, LocalTime horaDesde, Ubicacion ubicacion, Ubicacion ubicacionC, double costoFijo , double costoPorKm) {
-		super(tipoEntrega,id, fecha, efectivo);
+	public Envio( LocalDate fecha, boolean efectivo, LocalTime horaHasta, LocalTime horaDesde, Ubicacion ubicacion, Ubicacion ubicacionC, double costoFijo , double costoPorKm) {
+		super( fecha, efectivo);
 		this.horaHasta = horaHasta;
 		this.horaDesde = horaDesde;
 		this.ubicacion = ubicacion;
@@ -52,6 +52,8 @@ public class Envio extends Entrega {
 	public void setUbicacion(Ubicacion ubicacion) {
 		this.ubicacion = ubicacion;
 	}
+	
+	
 	
 	public double distanciaCoord(double lat1, double lng1, double lat2, double lng2) {
 		double radioTierra = 6371; //en kilómetros

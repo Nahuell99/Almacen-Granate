@@ -5,8 +5,8 @@ public class Cliente extends Actor{
 	private String nombre;
 	private long dni;
 	
-	public Cliente(int id, Contacto contacto, String apellido, String nombre, long dni, char genero)throws Exception {
-		super( id, contacto);
+	public Cliente( Contacto contacto, String apellido, String nombre, long dni, char genero)throws Exception {
+		super(contacto);
 		this.apellido = apellido;
 		this.nombre = nombre;
 		this.setDni(dni);
@@ -27,6 +27,7 @@ public class Cliente extends Actor{
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
+		
 
 	public long getDni() {
 		return dni;

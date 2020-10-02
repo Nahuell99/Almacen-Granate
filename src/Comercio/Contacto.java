@@ -35,10 +35,4 @@ public class Contacto {
 		this.ubicacion = ubicacion;
 	}
 	
-	
-	public void agregarContacto(String email, String celular,Ubicacion ubicacion) {
-		setEmail(email);
-		setCelular(celular);
-		setUbicacion(ubicacion);
-	}
 }

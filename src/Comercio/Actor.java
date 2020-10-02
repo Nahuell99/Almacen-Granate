@@ -5,18 +5,21 @@ import java.util.Objects;
 public abstract class Actor {
 	protected int id;
 	protected Contacto contacto;
+	static int idActor=0;
 
-	public Actor(int id,Contacto contacto) {
-		this.id = id;
+	public Actor(Contacto contacto) {
+		
+		this.id = ++idActor;
 		this.contacto = contacto;
+		
 	}
 
 	public int getId() {
 		return id;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public void setId() {
+		this.id = ++idActor;
 	}
 
 	public Contacto getContacto() {

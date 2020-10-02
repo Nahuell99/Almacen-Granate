@@ -8,6 +8,7 @@ import Carrito.Articulo;
 import Carrito.Carrito;
 import Carrito.Entrega;
 import Carrito.Envio;
+import Carrito.RetiroLocal;
 import Carrito.ItemCarrito;
 
 public class Comercio extends Actor {
@@ -22,9 +23,9 @@ public class Comercio extends Actor {
 	ArrayList<Carrito> lstCarrito;
 	ArrayList<Articulo> lstArticulo;
 
-	public Comercio(int id, Contacto contacto, String nombreComercio, long cuit, double costoFijo, double costoPorKm,
+	public Comercio(Contacto contacto, String nombreComercio, long cuit, double costoFijo, double costoPorKm,
 			int diaDescuento, int porcentajeDescuentoDia, int porcentajeDescuentoEfectivo) throws Exception {
-		super( id, contacto);
+		super(contacto);
 		this.nombreComercio = nombreComercio;
 		this.setCuit(cuit);
 		this.costoFijo = costoFijo;
@@ -36,10 +37,6 @@ public class Comercio extends Actor {
 		this.lstCarrito = new ArrayList<Carrito>();
 		this.lstArticulo = new ArrayList<Articulo>();
 	}
-
-
-
-
 
 	public String getNombreComercio() {
 		return nombreComercio;
@@ -100,23 +97,26 @@ public class Comercio extends Actor {
 		this.porcentajeDescuentoEfectivo = porcentajeDescuentoEfectivo;
 	}
 
-	public void agregarDiaRetiro(int id, int diaSemana, LocalTime horaDesde, LocalTime horaHasta, int intervalo) {
-		lstDiaRetiro.add(new DiaRetiro(id, diaSemana,  horaDesde,horaHasta, intervalo));
+	public void agregarDiaRetiro( int diaSemana, LocalTime horaDesde, LocalTime horaHasta, int intervalo) {
+
+		lstDiaRetiro.add(new DiaRetiro( diaSemana, horaDesde, horaHasta, intervalo));
 	}
 
-	public void agregarLstCarrito(int id, LocalDate fecha, LocalTime hora, boolean cerrado, double descuento, Cliente cliente) throws Exception {
-		lstCarrito.add(new Carrito(id,  fecha,  hora,  cerrado,  descuento,  cliente));
+	public void agregarLstCarrito(LocalDate fecha, LocalTime hora, Cliente cliente)
+			throws Exception {
+		lstCarrito.add(new Carrito(fecha, hora, cliente));
 	}
 
-	public void agregarLstArticulo(int id, String nombre, String codBarra, double precio) throws Exception {
-		lstArticulo.add(new Articulo(id, nombre, codBarra, precio));
+	public void agregarLstArticulo(String nombre, String codBarra, double precio) throws Exception {
+		lstArticulo.add(new Articulo(nombre, codBarra, precio));
 	}
 
 	public Articulo traerArticuloCod(String codBarra) {
 		Articulo traerArt = null;
 		int i = 0;
-		// for(i = 0; i < lstArticulo.size(); i++)
+
 		while (i < lstArticulo.size() && traerArt == null) {
+
 			if (lstArticulo.get(i).getCodBarra().equals(codBarra)) {
 				traerArt = lstArticulo.get(i);
 			}
@@ -127,6 +127,7 @@ public class Comercio extends Actor {
 
 	public Carrito traerCarritoId(int id) {
 		Carrito traerCarrito = null;
+
 		for (Carrito str : lstCarrito) {
 			if (str.getId() == id) {
 				traerCarrito = str;
@@ -143,15 +144,20 @@ public class Comercio extends Actor {
 				+ ", lstDiaRetiro=" + lstDiaRetiro + ", lstCarrito=" + lstCarrito + ", lstArticulo=" + lstArticulo
 				+ "]";
 	}
+
+	// Metodos para instanciar todas la clase relacionadas
+
+	public Cliente nuevoCliente(String email, String celular, double latitud, double longitud, String apellido,
+			String nombre, long dni, char genero) throws Exception {
+
+		return new Cliente(new Contacto(email, celular, new Ubicacion(latitud, longitud)), apellido, nombre, dni,
+				genero);
+
+	}	
+
+	public Contacto nuevoContacto(String email, String celular, Ubicacion ubicacion) {
+		return new Contacto(email, celular, ubicacion);
+	}
+
 	
-public Cliente nuevoCliente(int id, Contacto contacto, String apellido, String nombre, long dni, char genero) throws Exception {
-	Cliente cliente=new Cliente( id,  contacto,  apellido,  nombre,  dni,  genero);
-	return cliente;
-}
-
-public Entrega nuevaEntrega(boolean tipoEntrega, int id,  LocalDate fecha, boolean efectivo, LocalTime horaHasta, LocalTime horaDesde, Ubicacion ubicacion, Ubicacion ubicacionC, double costoFijo , double costoPorKm) {
-	Entrega envio=new Envio( tipoEntrega,  id,   fecha,  efectivo,  horaHasta,  horaDesde,  ubicacion,  ubicacionC,  costoFijo ,  costoPorKm);
-	return envio;
-}
-
 }
