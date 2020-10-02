@@ -3,35 +3,24 @@ package Carrito;
 import java.time.LocalDate;
 
 public abstract class Entrega {
+	static int idEntrega=0;
 	protected int id;
-	protected boolean tipoEntrega;
 	protected LocalDate fecha;
 	protected boolean efectivo;
 	
-	public Entrega( boolean tipoEntrega,int id, LocalDate fecha, boolean efectivo) {
-
-		this.tipoEntrega=tipoEntrega;
-		this.id = id;
+	public Entrega(LocalDate fecha, boolean efectivo) {
+		this.id=++idEntrega;		
 		this.fecha = fecha;
 		this.efectivo = efectivo;
 	}
 	
-	public boolean isTipoEntrega() {
-		return tipoEntrega;
-	}
-
-	public void setTipoEntrega(boolean tipoEntrega) {
-		this.tipoEntrega = tipoEntrega;
-	}
-
-
 	
 	public int getId() {
 		return id;
 	}
 	
-	public void setId(int id) {
-		this.id = id;
+	public void setId() {
+		this.id = ++idEntrega;
 	}
 	
 	public LocalDate getFecha() {

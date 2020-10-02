@@ -1,11 +1,17 @@
 package Comercio;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 
 import Carrito.Articulo;
 import Carrito.Carrito;
+import Carrito.Entrega;
+import Carrito.Envio;
+import Carrito.RetiroLocal;
+import Carrito.ItemCarrito;
 
-public class Comercio extends Actor{
+public class Comercio extends Actor {
 	private String nombreComercio;
 	private long cuit;
 	private double costoFijo;
@@ -13,19 +19,15 @@ public class Comercio extends Actor{
 	private int diaDescuento;
 	private int porcentajeDescuentoDia;
 	private int porcentajeDescuentoEfectivo;
-	ArrayList<DiaRetiro> lstDiaRetiro; 
+	ArrayList<DiaRetiro> lstDiaRetiro;
 	ArrayList<Carrito> lstCarrito;
 	ArrayList<Articulo> lstArticulo;
-	
-	public Comercio(int id,Contacto contacto,String nombreComercio,long cuit, double costoFijo, double costoPorKm, int diaDescuento,
-			int porcentajeDescuentoDia, int porcentajeDescuentoEfectivo) {
-		super(id, contacto);
+
+	public Comercio(Contacto contacto, String nombreComercio, long cuit, double costoFijo, double costoPorKm,
+			int diaDescuento, int porcentajeDescuentoDia, int porcentajeDescuentoEfectivo) throws Exception {
+		super(contacto);
 		this.nombreComercio = nombreComercio;
-		try {
-			this.setCuit(cuit);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		this.setCuit(cuit);
 		this.costoFijo = costoFijo;
 		this.costoPorKm = costoPorKm;
 		this.diaDescuento = diaDescuento;
@@ -49,7 +51,7 @@ public class Comercio extends Actor{
 	}
 
 	public void setCuit(long cuit) throws Exception {
-		if(! validarIdentificadorUnicoCUIT(cuit) )  {
+		if (!validarIdentificadorUnicoCUIT(cuit)) {
 			throw new Exception("CUIT Invalido");
 		}
 		this.cuit = cuit;
@@ -93,46 +95,47 @@ public class Comercio extends Actor{
 
 	public void setPorcentajeDescuentoEfectivo(int porcentajeDescuentoEfectivo) {
 		this.porcentajeDescuentoEfectivo = porcentajeDescuentoEfectivo;
-	} 
-	
-	public void agregarDiaRetiro(DiaRetiro DiaRetiroA){
-		lstDiaRetiro.add(DiaRetiroA);
-		}
-	
-	public void agregarLstCarrito(Carrito lstCarritoA){
-		lstCarrito.add(lstCarritoA);
-	}
-	public void agregarLstArticulo(int id, String nombre,String codBarra, double precio)throws Exception{
-		lstArticulo.add(new Articulo(id, nombre, codBarra, precio));
 	}
 
-	public Articulo traerArticuloCod (String codBarra) {
+	public void agregarDiaRetiro( int diaSemana, LocalTime horaDesde, LocalTime horaHasta, int intervalo) {
+
+		lstDiaRetiro.add(new DiaRetiro( diaSemana, horaDesde, horaHasta, intervalo));
+	}
+
+	public void agregarLstCarrito(LocalDate fecha, LocalTime hora, Cliente cliente)
+			throws Exception {
+		lstCarrito.add(new Carrito(fecha, hora, cliente));
+	}
+
+	public void agregarLstArticulo(String nombre, String codBarra, double precio) throws Exception {
+		lstArticulo.add(new Articulo(nombre, codBarra, precio));
+	}
+
+	public Articulo traerArticuloCod(String codBarra) {
+		Articulo traerArt = null;
 		int i = 0;
-		//for(i = 0; i < lstArticulo.size(); i++)
-		while(i < lstArticulo.size())
-		{
-		    if(lstArticulo.get(i).getCodBarra().equals(codBarra)) {
-		    	return lstArticulo.get(i);
-		    }
-		    i++;
+
+		while (i < lstArticulo.size() && traerArt == null) {
+
+			if (lstArticulo.get(i).getCodBarra().equals(codBarra)) {
+				traerArt = lstArticulo.get(i);
+			}
+			i++;
 		}
-		
-		return null;
-	}
-	
-	public Carrito traerCarritoId(int id) {
-		for(Carrito str : lstCarrito)
-		{
-		    if(str.getId() == id) {
-		    	return str;
-		    }
-		}
-		return null;
+		return traerArt;
 	}
 
-	
-	
-	
+	public Carrito traerCarritoId(int id) {
+		Carrito traerCarrito = null;
+
+		for (Carrito str : lstCarrito) {
+			if (str.getId() == id) {
+				traerCarrito = str;
+			}
+		}
+		return traerCarrito;
+	}
+
 	@Override
 	public String toString() {
 		return "Comercio [nombreComercio=" + nombreComercio + ", cuit=" + cuit + ", costoFijo=" + costoFijo
@@ -142,8 +145,19 @@ public class Comercio extends Actor{
 				+ "]";
 	}
 
-	
-	
-	
+	// Metodos para instanciar todas la clase relacionadas
+
+	public Cliente nuevoCliente(String email, String celular, double latitud, double longitud, String apellido,
+			String nombre, long dni, char genero) throws Exception {
+
+		return new Cliente(new Contacto(email, celular, new Ubicacion(latitud, longitud)), apellido, nombre, dni,
+				genero);
+
+	}	
+
+	public Contacto nuevoContacto(String email, String celular, Ubicacion ubicacion) {
+		return new Contacto(email, celular, ubicacion);
+	}
+
 	
 }

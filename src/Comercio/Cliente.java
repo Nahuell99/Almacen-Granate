@@ -4,13 +4,11 @@ public class Cliente extends Actor{
 	private String apellido;
 	private String nombre;
 	private long dni;
-	private char genero;
 	
-	public Cliente(int id, Contacto contacto, String apellido, String nombre, long dni, char genero)throws Exception {
-		super(id, contacto);
+	public Cliente( Contacto contacto, String apellido, String nombre, long dni, char genero)throws Exception {
+		super(contacto);
 		this.apellido = apellido;
 		this.nombre = nombre;
-		this.genero = genero;
 		this.setDni(dni);
 	}
 
@@ -29,6 +27,7 @@ public class Cliente extends Actor{
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
+		
 
 	public long getDni() {
 		return dni;
@@ -39,6 +38,11 @@ public class Cliente extends Actor{
 			throw new Exception("DNI invalido");
 		}
 		this.dni = dni;
+	}
+
+	@Override
+	public String toString() {
+		return "Cliente [apellido=" + apellido + ", nombre=" + nombre + ", dni=" + dni + "]";
 	}
 	
 	

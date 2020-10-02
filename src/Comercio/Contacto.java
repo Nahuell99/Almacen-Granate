@@ -6,7 +6,6 @@ public class Contacto {
 	private Ubicacion ubicacion;
 	
 	public Contacto(String email, String celular,Ubicacion ubicacion) {
-		super();
 		this.email = email;
 		this.celular = celular;
 		this.ubicacion = ubicacion;
@@ -35,7 +34,5 @@ public class Contacto {
 	public void setUbicacion(Ubicacion ubicacion) {
 		this.ubicacion = ubicacion;
 	}
-	
-	
 	
 }

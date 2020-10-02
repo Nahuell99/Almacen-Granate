@@ -5,7 +5,7 @@ public class ItemCarrito {
 	private int cantidad;
 	
 	public ItemCarrito(Articulo articulo, int cantidad) {
-		super();
+
 		this.articulo = articulo;
 		this.cantidad = cantidad;
 	}
@@ -29,5 +29,7 @@ public class ItemCarrito {
 	public double calcularSubTotalItem() {
         return articulo.getPrecio()*cantidad;
     }
+	
+	
 	
 }
