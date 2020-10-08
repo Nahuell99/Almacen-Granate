@@ -8,7 +8,7 @@ import Carrito.Envio;
 import Comercio.Cliente;
 import Comercio.Comercio;
 import Comercio.Contacto;
-
+import Comercio.Turno;
 import Comercio.Ubicacion;
 
 public class TestAlmacen {
@@ -51,7 +51,7 @@ public class TestAlmacen {
 			
 
 			// agrego dia de retiro
-			comercio.agregarDiaRetiro(1, LocalTime.of(5, 30), LocalTime.of(18, 30), 1);
+			comercio.agregarDiaRetiro(1, LocalTime.of(6, 00), LocalTime.of(18,00), 1);
 
 			// Agrego items al carrito
 			comercio.traerCarritoId(1).agregarlstItemCarritoA(comercio.traerArticuloCod("7615596342361"), 4);
@@ -65,6 +65,9 @@ public class TestAlmacen {
 					cliente1.getContacto().getUbicacion(), comercio.getContacto().getUbicacion(),
 					comercio.getCostoFijo(), comercio.getCostoPorKm());
 
+			
+			//Turno turnosOcupados=  
+			
 			System.out.println();
 			System.out.println("Total carrito sin descuento: " + comercio.traerCarritoId(1).calcularTotalCarrito());
 			System.out.println("Descuento: "

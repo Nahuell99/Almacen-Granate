@@ -288,9 +288,7 @@ public class Carrito {
 			resultado = calcularTotalCarrito() - this.descuento + ((Envio) getEntrega()).getCosto();
 
 		} else {
-			// agregar turno disponible
-			
-			
+			// agregar turno disponible imprimimos el turno asignado
 			// envio el resultado sin envio
 			System.out.println("Retira por local.");
 
@@ -309,14 +307,22 @@ public class Carrito {
 		setEntrega(new Envio(fecha, efectivo, horaHasta, horaDesde, ubicacion, ubicacionC, costoFijo, costoPorKm));
 	}
 
-	public void nuevaEntrega(LocalDate fecha, boolean efectivo, LocalTime horaEntrega) throws Exception {
+	public Turno nuevaEntrega(LocalDate fecha, boolean efectivo, LocalTime horaEntrega) throws Exception {
 
 		if (entrega != null) {
 			throw new Exception("Ya existe una entrega con envio");
 		}
 		setEntrega(new RetiroLocal(fecha, efectivo, horaEntrega));
 		
-
+		
+		
+		
+		return null;
 	}
-
+	
+	
+	
+	
+	
+	
 }

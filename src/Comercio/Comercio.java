@@ -229,5 +229,32 @@ public class Comercio extends Actor {
 
 		return idNuevo;
 	}
+	
+	public ArrayList<Turno> generarTurnosLibres (LocalDate fecha) {
+		ArrayList <Turno> lstTurnosLibres = new ArrayList<Turno>();
+		DiaRetiro dia = traerDiaRetiroPorDiaSemana(fecha.getDayOfWeek().getValue());
+		LocalTime horaInicio = dia.getHoraDesde();
+		
+		while( horaInicio.isBefore(dia.getHoraHasta()) ){ //COMPRUEBA SI LA HORA DE INICIO ES SUPERIO A LA HORA MAXIMA HATA CUANDO SE ERMITE ENTREGAR TURNOS LIBRES
+			lstTurnosLibres.add(new Turno(fecha, horaInicio, false)); //Agrego un turno libre con la fecha mandada por parametro y la hora praviamente comprobada que no supera la hora maxima
+			horaInicio = horaInicio.plusHours( lstDiaRetiro.get(1).getIntervalo() );	//LE SUMO EL INTERVALO DE HORAS PARA CADA TURNO
+		}
+		return lstTurnosLibres;
+	}
+	
+	public DiaRetiro traerDiaRetiroPorDiaSemana(int diaSemana) {
+		DiaRetiro dia = null;
+		for (DiaRetiro diaRetiro : lstDiaRetiro) {
+			if(diaRetiro.getDiaSemana() == diaSemana) {
+				dia = diaRetiro;
+			}
+		}
+		return dia;
+		
+	}
+	
+	
+	
+	
 
 }
