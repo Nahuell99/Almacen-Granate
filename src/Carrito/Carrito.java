@@ -289,7 +289,8 @@ public class Carrito {
 
 		} else {
 			// agregar turno disponible
-
+			
+			
 			// envio el resultado sin envio
 			System.out.println("Retira por local.");
 
@@ -314,6 +315,7 @@ public class Carrito {
 			throw new Exception("Ya existe una entrega con envio");
 		}
 		setEntrega(new RetiroLocal(fecha, efectivo, horaEntrega));
+		
 
 	}
 
