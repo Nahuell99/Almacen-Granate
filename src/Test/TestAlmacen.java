@@ -48,10 +48,13 @@ public class TestAlmacen {
 			comercio.agregarLstCarrito(LocalDate.now(), LocalTime.now(), cliente2);
 			comercio.agregarLstCarrito(LocalDate.now(), LocalTime.now(), cliente3);
 			comercio.agregarLstCarrito(LocalDate.now(), LocalTime.now(), cliente4);
-			
-
+		
 			// agrego dia de retiro
-			comercio.agregarDiaRetiro(1, LocalTime.of(6, 00), LocalTime.of(18,00), 1);
+			comercio.agregarDiaRetiro(1, LocalTime.of(6, 00), LocalTime.of(18,00), 1); // DIA DE RETIRO PARA LUNES
+			comercio.agregarDiaRetiro(2, LocalTime.of(6, 00), LocalTime.of(18,00), 1); // DIA DE RETIRO PARA MARTES
+			comercio.agregarDiaRetiro(3, LocalTime.of(6, 00), LocalTime.of(18,00), 1); // DIA DE RETIRO PARA MIERCOES
+			comercio.agregarDiaRetiro(4, LocalTime.of(6, 00), LocalTime.of(18,00), 1); // DIA DE RETIRO PARA JUEVES
+			comercio.agregarDiaRetiro(5, LocalTime.of(6, 00), LocalTime.of(18,00), 1); // DIA DE RETIRO PARA VIERNES
 
 			// Agrego items al carrito
 			comercio.traerCarritoId(1).agregarlstItemCarritoA(comercio.traerArticuloCod("7615596342361"), 4);
@@ -59,11 +62,23 @@ public class TestAlmacen {
 			comercio.traerCarritoId(1).agregarlstItemCarritoA(comercio.traerArticuloCod("9659376765214"), 1);
 			comercio.traerCarritoId(1).agregarlstItemCarritoA(comercio.traerArticuloCod("4950671922148"), 2);
 			comercio.traerCarritoId(1).agregarlstItemCarritoA(comercio.traerArticuloCod("4950671922148"), 5);
+			
+			//AGREGO OTRO ITEM CARRITO
+			comercio.traerCarritoId(2).agregarlstItemCarritoA(comercio.traerArticuloCod("7615596342361"), 4);
+			comercio.traerCarritoId(2).agregarlstItemCarritoA(comercio.traerArticuloCod("6382730434473"), 6);
+			comercio.traerCarritoId(2).agregarlstItemCarritoA(comercio.traerArticuloCod("9659376765214"), 1);
+			comercio.traerCarritoId(2).agregarlstItemCarritoA(comercio.traerArticuloCod("4950671922148"), 2);
+			comercio.traerCarritoId(2).agregarlstItemCarritoA(comercio.traerArticuloCod("4950671922148"), 5);
+			
 
-			// agrego envio
+			//AGREGO ENTREGA ENVIO AL PRIMER CARRITO
 			comercio.traerCarritoId(1).nuevaEntrega(LocalDate.now(), false, LocalTime.now(), LocalTime.of(18, 30),
 					cliente1.getContacto().getUbicacion(), comercio.getContacto().getUbicacion(),
 					comercio.getCostoFijo(), comercio.getCostoPorKm());
+			//AGREGO ENTREGA RETIRO AL SEGUNDO CARRITO
+			
+			comercio.traerCarritoId(2).nuevaEntrega(LocalDate.now(), false, LocalTime.of(12, 00));
+			
 
 			
 			//Turno turnosOcupados=  
