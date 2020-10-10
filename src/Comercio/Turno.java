@@ -44,6 +44,8 @@ public class Turno {
 		return "Turno [dia=" + dia + ", hora=" + hora + ", ocupado=" + ocupado + "]";
 	}
 	
-	
+	public void saludar() {
+		System.out.println("hola");
+	}
 	
 }

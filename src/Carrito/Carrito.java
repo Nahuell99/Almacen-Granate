@@ -313,23 +313,51 @@ public class Carrito {
 		if (entrega != null) {
 			throw new Exception("Ya existe una entrega con envio");
 		}
-		int i=0;
-		boolean encontrado=false;
+		int i = 0;
+		boolean encontrado = false;
 
-		
-		while(i<turnosLibres.size()&& encontrado==false) {
-			
-			if(turnosLibres.get(i).isOcupado()==false) {
+		while (i < turnosLibres.size() && encontrado == false) {
+
+			if (turnosLibres.get(i).isOcupado() == false) {
 				turnosLibres.get(i).setOcupado(true);
-				encontrado=true;
-				
-			}			
+				encontrado = true;
+
+			}
 			i++;
-			
+
 		}
-		
-		setEntrega(new RetiroLocal(turnosLibres.get(i-1).getDia(), efectivo, turnosLibres.get(i-1).getHora()));
+
+		setEntrega(new RetiroLocal(turnosLibres.get(i - 1).getDia(), efectivo, turnosLibres.get(i - 1).getHora()));
 
 	}
 
+	public void nuevaEntrega(ArrayList<Turno> turnosLibres, boolean efectivo, LocalTime horaEntrega) throws Exception {
+
+		if (entrega != null) {
+			throw new Exception("Ya existe una entrega con envio");
+		}
+		int i = 0;
+		boolean encontrado = false;
+
+		while (i < turnosLibres.size() && encontrado == false) {
+
+			if (turnosLibres.get(i).getHora() == horaEntrega) {
+				if (turnosLibres.get(i).isOcupado() == false) {
+					turnosLibres.get(i).setOcupado(true);
+					
+					setEntrega(new RetiroLocal(turnosLibres.get(i).getDia(), efectivo, turnosLibres.get(i).getHora()));
+					encontrado = true;
+					
+				} else {
+					throw new Exception("el turno esta ocupado");
+				}
+			}
+
+			i++;
+
+		}
+		if (!encontrado) {
+			throw new Exception("No pudo asignarse el turno");
+		}
+	}
 }

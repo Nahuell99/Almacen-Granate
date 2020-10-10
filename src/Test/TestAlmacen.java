@@ -52,12 +52,11 @@ public class TestAlmacen {
 
 			// agrego dia de retiro
 
-			comercio.agregarDiaRetiro(5, LocalTime.of(6, 00), LocalTime.of(18, 00), 1);
 			comercio.agregarDiaRetiro(1, LocalTime.of(6, 00), LocalTime.of(18, 00), 1); // DIA DE RETIRO PARA LUNES
 			comercio.agregarDiaRetiro(2, LocalTime.of(6, 00), LocalTime.of(18, 00), 1); // DIA DE RETIRO PARA MARTES
 			comercio.agregarDiaRetiro(3, LocalTime.of(6, 00), LocalTime.of(18, 00), 1); // DIA DE RETIRO PARA MIERCOES
 			comercio.agregarDiaRetiro(4, LocalTime.of(6, 00), LocalTime.of(18, 00), 1); // DIA DE RETIRO PARA JUEVES
-			comercio.agregarDiaRetiro(5, LocalTime.of(6, 00), LocalTime.of(18, 00), 1); // DIA DE RETIRO PARA VIERNES
+			comercio.agregarDiaRetiro(6, LocalTime.of(6, 00), LocalTime.of(18, 00), 1); // DIA DE RETIRO PARA VIERNES
 
 			// Agrego items al carrito
 			comercio.traerCarritoId(1).agregarlstItemCarritoA(comercio.traerArticuloCod("7615596342361"), 4);
@@ -68,11 +67,11 @@ public class TestAlmacen {
 
 			// AGREGO OTRO ITEM CARRITO
 
-			comercio.traerCarritoId(2).agregarlstItemCarritoA(comercio.traerArticuloCod("7615596342361"), 4);
-			comercio.traerCarritoId(2).agregarlstItemCarritoA(comercio.traerArticuloCod("6382730434473"), 6);
-			comercio.traerCarritoId(2).agregarlstItemCarritoA(comercio.traerArticuloCod("9659376765214"), 1);
-			comercio.traerCarritoId(2).agregarlstItemCarritoA(comercio.traerArticuloCod("4950671922148"), 2);
-			comercio.traerCarritoId(2).agregarlstItemCarritoA(comercio.traerArticuloCod("4950671922148"), 5);
+			comercio.traerCarritoId(2).agregarlstItemCarritoA(comercio.traerArticuloCod("7388386942842"), 4);
+			comercio.traerCarritoId(2).agregarlstItemCarritoA(comercio.traerArticuloCod("7615596342361"), 6);
+			comercio.traerCarritoId(2).agregarlstItemCarritoA(comercio.traerArticuloCod("5752907913932"), 1);
+			comercio.traerCarritoId(2).agregarlstItemCarritoA(comercio.traerArticuloCod("6046202617466"), 2);
+			comercio.traerCarritoId(2).agregarlstItemCarritoA(comercio.traerArticuloCod("5575951290145"), 5);
 
 			// agrego envio
 			/*
@@ -82,20 +81,31 @@ public class TestAlmacen {
 			 * comercio.getCostoPorKm());
 			 * 
 			 */
-			ArrayList<Turno> turnoHoy = comercio.generarTurnosLibres(LocalDate.now());
+			ArrayList<Turno> turnosHoy = comercio.generarTurnosLibres(LocalDate.now());
 
-			comercio.traerCarritoId(1).nuevaEntrega(turnoHoy, true);
-			comercio.traerCarritoId(2).nuevaEntrega(turnoHoy, false);
 
-			System.out.println(turnoHoy.toString());
+			comercio.traerCarritoId(1).nuevaEntrega(turnosHoy, true);
+			comercio.traerCarritoId(2).nuevaEntrega(turnosHoy, false, LocalTime.of(12, 00));
+
+			
+			int i = 0;
+			while (i < turnosHoy.size()) {
+				if(turnosHoy.get(i).isOcupado()==false) {
+					System.out.println(turnosHoy.get(i));
+				}
+				i++;
+			}
+			
+			System.out.println(turnosHoy.toString());
 
 			// AGREGO ENTREGA ENVIO AL PRIMER CARRITO
-		/*	comercio.traerCarritoId(1).nuevaEntrega(LocalDate.now(), false, LocalTime.now(), LocalTime.of(18, 30),
-					cliente1.getContacto().getUbicacion(), comercio.getContacto().getUbicacion(),
-					comercio.getCostoFijo(), comercio.getCostoPorKm());
-		*/	
+			/*
+			 * comercio.traerCarritoId(1).nuevaEntrega(LocalDate.now(), false,
+			 * LocalTime.now(), LocalTime.of(18, 30), cliente1.getContacto().getUbicacion(),
+			 * comercio.getContacto().getUbicacion(), comercio.getCostoFijo(),
+			 * comercio.getCostoPorKm());
+			 */
 			// AGREGO ENTREGA RETIRO AL SEGUNDO CARRITO
-
 
 			// Turno turnosOcupados=
 

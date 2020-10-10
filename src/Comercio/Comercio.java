@@ -252,11 +252,6 @@ public class Comercio extends Actor {
 		return dia;
 		
 	}
-	
-	
-	
-
-	
 
 	
 	
