@@ -24,7 +24,6 @@ public class Carrito {
 		this.cliente = cliente;
 		this.lstItemCarrito = new ArrayList<ItemCarrito>();
 		this.descuento = 0;
-
 	}
 
 	public int getId() {
@@ -360,4 +359,8 @@ public class Carrito {
 			throw new Exception("No pudo asignarse el turno");
 		}
 	}
+	
+	
+	
+	
 }
