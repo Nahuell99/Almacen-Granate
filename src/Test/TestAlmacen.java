@@ -17,11 +17,33 @@ public class TestAlmacen {
 	public static void main(String[] args) {
 
 		try {
-			// creo comercio
+			//	 INSTANCIO COMERCIO
+			// 		diaDescuento: 5 	- porcentajeDescuentoDia: 10 	- porcentajeDescuentoEfectivo: 25
 			Comercio comercio = new Comercio(
 					new Contacto("almacengranate", "15151651", new Ubicacion(-38.5545, -58.7396)), "Almacen Granate",
-					30610252334L, 100, 5, 4, 10, 25);
+					30610252334L, 100, 5, 7, 100, 25);
 
+			// Agrego articulos al comercio
+			comercio.agregarLstArticulo("jabón", "1234567890418", 30);
+			comercio.agregarLstArticulo("sal", "6382730434473", 20);
+			comercio.agregarLstArticulo("arroz", "9659376765214", 40);
+			comercio.agregarLstArticulo("harina", "4950671922148", 10);
+			comercio.agregarLstArticulo("lavandina", "7388386942842", 60);
+			comercio.agregarLstArticulo("leche", "5752907913932", 70);
+			comercio.agregarLstArticulo("aceite", "6046202617466", 33);
+			comercio.agregarLstArticulo("huevos", "5701050395621", 74);
+			comercio.agregarLstArticulo("levadura", "7615596342361", 58);
+			comercio.agregarLstArticulo("azucar", "5575951290145", 44);
+			
+			// agrego dia de retiro
+			comercio.agregarDiaRetiro(1, LocalTime.of(6, 00), LocalTime.of(18, 00), 1); //  LUNES
+			comercio.agregarDiaRetiro(2, LocalTime.of(6, 00), LocalTime.of(18, 00), 2); //  MARTES
+			comercio.agregarDiaRetiro(3, LocalTime.of(6, 00), LocalTime.of(18, 00), 3); //  MIERCOES
+			comercio.agregarDiaRetiro(4, LocalTime.of(6, 00), LocalTime.of(18, 00), 1); //  JUEVES
+			comercio.agregarDiaRetiro(5, LocalTime.of(6, 00), LocalTime.of(18, 00), 1); //  VIERNES
+			comercio.agregarDiaRetiro(6, LocalTime.of(6, 00), LocalTime.of(18, 00), 1); //  SABADO
+			comercio.agregarDiaRetiro(7, LocalTime.of(6, 00), LocalTime.of(18, 00), 2); //  DOMINGO
+			
 			// creo clientes
 			Cliente cliente1 = comercio.nuevoCliente("emanigro@gmail.com", "53613131", -38.0055, -57.5426, "Nigro",
 					"Emanuel", 30659878L, 'm');
@@ -31,86 +53,49 @@ public class TestAlmacen {
 					"Rossi", 63987541L, 'f');
 			Cliente cliente4 = comercio.nuevoCliente("fedeprocs@gmail.com", "15151611", 123L, 823L, "Federic", "Procs",
 					35426987L, 'm');
-
-			// Agrego articulos al comercio
-			comercio.agregarLstArticulo("jabón", "1234567890418", 30);
-			comercio.agregarLstArticulo("sal", "6382730434473", 30);
-			comercio.agregarLstArticulo("arroz", "9659376765214", 30);
-			comercio.agregarLstArticulo("harina", "4950671922148", 30);
-			comercio.agregarLstArticulo("lavandina", "7388386942842", 30);
-			comercio.agregarLstArticulo("leche", "5752907913932", 30);
-			comercio.agregarLstArticulo("aceite", "6046202617466", 30);
-			comercio.agregarLstArticulo("huevos", "5701050395621", 30);
-			comercio.agregarLstArticulo("levadura", "7615596342361", 30);
-			comercio.agregarLstArticulo("azucar", "5575951290145", 30);
-
+			
 			// creo carritos
 			comercio.agregarLstCarrito(LocalDate.now(), LocalTime.now(), cliente1);
 			comercio.agregarLstCarrito(LocalDate.now(), LocalTime.now(), cliente2);
 			comercio.agregarLstCarrito(LocalDate.now(), LocalTime.now(), cliente3);
 			comercio.agregarLstCarrito(LocalDate.now(), LocalTime.now(), cliente4);
+	
 
-			// agrego dia de retiro
-
-			comercio.agregarDiaRetiro(1, LocalTime.of(6, 00), LocalTime.of(18, 00), 1); // DIA DE RETIRO PARA LUNES
-			comercio.agregarDiaRetiro(2, LocalTime.of(6, 00), LocalTime.of(18, 00), 1); // DIA DE RETIRO PARA MARTES
-			comercio.agregarDiaRetiro(3, LocalTime.of(6, 00), LocalTime.of(18, 00), 1); // DIA DE RETIRO PARA MIERCOES
-			comercio.agregarDiaRetiro(4, LocalTime.of(6, 00), LocalTime.of(18, 00), 1); // DIA DE RETIRO PARA JUEVES
-			comercio.agregarDiaRetiro(7, LocalTime.of(6, 00), LocalTime.of(18, 00), 1); // DIA DE RETIRO PARA VIERNES
-
-			// Agrego items al carrito
+			// Agrego items al carrito 1
 			comercio.traerCarritoId(1).agregarlstItemCarritoA(comercio.traerArticuloCod("7615596342361"), 4);
 			comercio.traerCarritoId(1).agregarlstItemCarritoA(comercio.traerArticuloCod("6382730434473"), 6);
 			comercio.traerCarritoId(1).agregarlstItemCarritoA(comercio.traerArticuloCod("9659376765214"), 1);
 			comercio.traerCarritoId(1).agregarlstItemCarritoA(comercio.traerArticuloCod("4950671922148"), 2);
 			comercio.traerCarritoId(1).agregarlstItemCarritoA(comercio.traerArticuloCod("4950671922148"), 5);
 
-			// AGREGO OTRO ITEM CARRITO
-
+			// AGREGO OTRO ITEM CARRITO 2
 			comercio.traerCarritoId(2).agregarlstItemCarritoA(comercio.traerArticuloCod("7388386942842"), 4);
 			comercio.traerCarritoId(2).agregarlstItemCarritoA(comercio.traerArticuloCod("7615596342361"), 6);
 			comercio.traerCarritoId(2).agregarlstItemCarritoA(comercio.traerArticuloCod("5752907913932"), 1);
 			comercio.traerCarritoId(2).agregarlstItemCarritoA(comercio.traerArticuloCod("6046202617466"), 2);
 			comercio.traerCarritoId(2).agregarlstItemCarritoA(comercio.traerArticuloCod("5575951290145"), 5);
 
-			// agrego envio
-			/*
-			 * comercio.traerCarritoId(1).nuevaEntrega(LocalDate.now(), false,
-			 * LocalTime.now(), LocalTime.of(18, 30), cliente1.getContacto().getUbicacion(),
-			 * comercio.getContacto().getUbicacion(), comercio.getCostoFijo(),
-			 * comercio.getCostoPorKm());
-			 * 
-			 */
+	
 
-
-	//		comercio.traerCarritoId(1).nuevaEntrega(turnosHoy, true);
-			comercio.nuevoRetiroLocal(2, false, LocalTime.of(14, 00));
+			// AGREGO ENTREGA ENVIO AL  CARRITO 1
+			comercio.traerCarritoId(1).nuevaEntrega(LocalDate.now(), true, LocalTime.now(), LocalTime.of(18, 30),
+					cliente1.getContacto().getUbicacion(), comercio.getContacto().getUbicacion(),
+					comercio.getCostoFijo(), comercio.getCostoPorKm());			
+			 
 			
+			// AGREGO ENTREGA RETIRO AL SEGUNDO CARRITO 2
+			comercio.traerCarritoId(2).nuevaEntrega(LocalDate.now(), true,	 LocalTime.of(12, 00));
 			
-			comercio.traerCarritoId(1).nuevaEntrega(LocalDate.now(), true, LocalTime.of(07, 00));
-		//	comercio.traerCarritoId(2).nuevaEntrega(LocalDate.now(), true, LocalTime.of(10, 00));
-
-		//	ArrayList<Turno> turnosHoy = comercio.generarTurnosLibres(LocalDate.now());
-			System.out.println(comercio.generarAgenda2(LocalDate.now()));
-
-
-			// AGREGO ENTREGA ENVIO AL PRIMER CARRITO
-			/*
-			 * comercio.traerCarritoId(1).nuevaEntrega(LocalDate.now(), false,
-			 * LocalTime.now(), LocalTime.of(18, 30), cliente1.getContacto().getUbicacion(),
-			 * comercio.getContacto().getUbicacion(), comercio.getCostoFijo(),
-			 * comercio.getCostoPorKm());
-			 */
-			// AGREGO ENTREGA RETIRO AL SEGUNDO CARRITO
-
-			// Turno turnosOcupados=
+			// AGENDA CON LOS TURNOS OCUPADOS Y DISPONIBLES ORDENADOS
+			System.out.println(comercio.generarAgenda(LocalDate.now()));
 
 			System.out.println();
 			System.out.println("Total carrito sin descuento: " + comercio.traerCarritoId(1).calcularTotalCarrito());
 			System.out.println("Descuento: "
-					+ comercio.traerCarritoId(1).calcularDescuentoCarrito(LocalDate.now().getDayOfWeek().getValue(),
+					+ comercio.traerCarritoId(1).calcularDescuentoCarrito(comercio.getDiaDescuento(),
 							comercio.getPorcentajeDescuentoDia(), comercio.getPorcentajeDescuentoEfectivo()));
 			System.out.println("Total carrito: " + comercio.traerCarritoId(1).totalAPagarCarrito());
+
 
 		} catch (Exception e) {
 			e.printStackTrace();

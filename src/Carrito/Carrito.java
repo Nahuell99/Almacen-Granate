@@ -160,7 +160,7 @@ public class Carrito {
 				// SI LA CANTIDAD ES MENOR LA RESTO
 				else if (lstItemCarrito.get(i).getCantidad() > cantidad) {
 					lstItemCarrito.get(i).setCantidad(lstItemCarrito.get(i).getCantidad() - cantidad);
-					System.out.println("Restado " + articuloNuevo + " del carrito");
+					System.out.println("Restado del carrito " + articuloNuevo );
 
 					itemRemovido = true;
 				}
@@ -170,7 +170,7 @@ public class Carrito {
 		}
 		if (!itemRemovido) {// SI EL ARTICULO NO EXISTE
 
-			throw new Exception("No existe el articulo " + articuloNuevo + " en el carrito");
+			throw new Exception("No existe el articulo en el carrito " + articuloNuevo );
 		}
 		return itemRemovido;
 	}
@@ -205,7 +205,7 @@ public class Carrito {
 		double precioArticulo = 0;
 		int unidadesConDescuento = 0;
 
-		if (diaDescuento == 5) {
+		if (diaDescuento == LocalDate.now().getDayOfWeek().getValue()) {
 
 			for (ItemCarrito iterador : lstItemCarrito) {
 				// UNA ITERACIÓN POR CADA ITEM DEL CARRITO
@@ -298,6 +298,8 @@ public class Carrito {
 		return resultado;
 	}
 
+	
+	// 	METODO PARA SETEAR ENTREGA POR ENVIO
 	public void nuevaEntrega(LocalDate fecha, boolean efectivo, LocalTime horaHasta, LocalTime horaDesde,
 			Ubicacion ubicacion, Ubicacion ubicacionC, double costoFijo, double costoPorKm) throws Exception {
 		if (entrega != null) {
@@ -307,68 +309,12 @@ public class Carrito {
 		setEntrega(new Envio(fecha, efectivo, horaHasta, horaDesde, ubicacion, ubicacionC, costoFijo, costoPorKm));
 	}
 
-	public void nuevaEntrega(ArrayList<Turno> turnosLibres, boolean efectivo) throws Exception {
-
-		if (entrega != null) {
-			throw new Exception("Ya existe una entrega con envio");
-		}
-		int i = 0;
-		boolean encontrado = false;
-
-		while (i < turnosLibres.size() && encontrado == false) {
-
-			if (turnosLibres.get(i).isOcupado() == false) {
-				turnosLibres.get(i).setOcupado(true);
-				encontrado = true;
-
-			}
-			i++;
-
-		}
-
-		setEntrega(new RetiroLocal(turnosLibres.get(i - 1).getDia(), efectivo, turnosLibres.get(i - 1).getHora()));
-
-	}
-/*
-	public void nuevaEntrega(ArrayList<Turno> turnosLibres, boolean efectivo, LocalTime horaEntrega) throws Exception {
-
-		if (entrega != null) {
-			throw new Exception("Ya existe una entrega con envio");
-		}
-		int i = 0;
-		boolean encontrado = false;
-
-		while (i < turnosLibres.size() && encontrado == false) {
-
-			if (turnosLibres.get(i).getHora() == horaEntrega) {
-				if (turnosLibres.get(i).isOcupado() == false) {
-					turnosLibres.get(i).setOcupado(true);
-					
-					setEntrega(new RetiroLocal(turnosLibres.get(i).getDia(), efectivo, turnosLibres.get(i).getHora()));
-					encontrado = true;
-					
-				} else {
-					throw new Exception("el turno esta ocupado");
-				}
-			}
-
-			i++;
-
-		}
-		if (!encontrado) {
-			throw new Exception("No pudo asignarse el turno");
-		}
-	} */
-	
+// 	METODO PARA SETEAR ENTREGA POR RETIRO LOCAL
 	public void nuevaEntrega(LocalDate fecha, boolean efectivo,LocalTime horaEntrega) throws Exception {
 
 		if (entrega != null) {
 			throw new Exception("Ya existe una entrega con envio");
 		}
-
 		setEntrega(new RetiroLocal( fecha,  efectivo, horaEntrega));
-
-	}
-	
-	
+	}	
 }
