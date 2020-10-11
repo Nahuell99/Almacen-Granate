@@ -56,7 +56,7 @@ public class TestAlmacen {
 			comercio.agregarDiaRetiro(2, LocalTime.of(6, 00), LocalTime.of(18, 00), 1); // DIA DE RETIRO PARA MARTES
 			comercio.agregarDiaRetiro(3, LocalTime.of(6, 00), LocalTime.of(18, 00), 1); // DIA DE RETIRO PARA MIERCOES
 			comercio.agregarDiaRetiro(4, LocalTime.of(6, 00), LocalTime.of(18, 00), 1); // DIA DE RETIRO PARA JUEVES
-			comercio.agregarDiaRetiro(6, LocalTime.of(6, 00), LocalTime.of(18, 00), 1); // DIA DE RETIRO PARA VIERNES
+			comercio.agregarDiaRetiro(7, LocalTime.of(6, 00), LocalTime.of(18, 00), 1); // DIA DE RETIRO PARA VIERNES
 
 			// Agrego items al carrito
 			comercio.traerCarritoId(1).agregarlstItemCarritoA(comercio.traerArticuloCod("7615596342361"), 4);
@@ -81,25 +81,18 @@ public class TestAlmacen {
 			 * comercio.getCostoPorKm());
 			 * 
 			 */
-			ArrayList<Turno> turnosHoy = comercio.generarTurnosLibres(LocalDate.now());
 
 
-			comercio.traerCarritoId(1).nuevaEntrega(turnosHoy, true);
-			comercio.nuevoRetiroLocal(2, false, LocalTime.of(06, 00));
+	//		comercio.traerCarritoId(1).nuevaEntrega(turnosHoy, true);
+			comercio.nuevoRetiroLocal(2, false, LocalTime.of(14, 00));
 			
-			System.out.println(comercio.generarAgenda(LocalDate.now()));
 			
+			comercio.traerCarritoId(1).nuevaEntrega(LocalDate.now(), true, LocalTime.of(07, 00));
+		//	comercio.traerCarritoId(2).nuevaEntrega(LocalDate.now(), true, LocalTime.of(10, 00));
 
-			
-			int i = 0;
-			while (i < turnosHoy.size()) {
-				if(turnosHoy.get(i).isOcupado()==false) {
-					System.out.println(turnosHoy.get(i));
-				}
-				i++;
-			}
-			
-			System.out.println(turnosHoy.toString());
+		//	ArrayList<Turno> turnosHoy = comercio.generarTurnosLibres(LocalDate.now());
+			System.out.println(comercio.generarAgenda2(LocalDate.now()));
+
 
 			// AGREGO ENTREGA ENVIO AL PRIMER CARRITO
 			/*

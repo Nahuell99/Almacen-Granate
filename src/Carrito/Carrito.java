@@ -360,7 +360,15 @@ public class Carrito {
 		}
 	} */
 	
-	
+	public void nuevaEntrega(LocalDate fecha, boolean efectivo,LocalTime horaEntrega) throws Exception {
+
+		if (entrega != null) {
+			throw new Exception("Ya existe una entrega con envio");
+		}
+
+		setEntrega(new RetiroLocal( fecha,  efectivo, horaEntrega));
+
+	}
 	
 	
 }
