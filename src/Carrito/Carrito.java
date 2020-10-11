@@ -329,7 +329,7 @@ public class Carrito {
 		setEntrega(new RetiroLocal(turnosLibres.get(i - 1).getDia(), efectivo, turnosLibres.get(i - 1).getHora()));
 
 	}
-
+/*
 	public void nuevaEntrega(ArrayList<Turno> turnosLibres, boolean efectivo, LocalTime horaEntrega) throws Exception {
 
 		if (entrega != null) {
@@ -358,7 +358,7 @@ public class Carrito {
 		if (!encontrado) {
 			throw new Exception("No pudo asignarse el turno");
 		}
-	}
+	} */
 	
 	
 	

@@ -3,6 +3,7 @@ package Comercio;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.List;
 
 import Carrito.Articulo;
 import Carrito.Carrito;
@@ -232,20 +233,31 @@ public class Comercio extends Actor {
 	
 	public ArrayList<Turno> generarTurnosLibres (LocalDate fecha) {
 		ArrayList <Turno> lstTurnosLibres = new ArrayList<Turno>();
-		DiaRetiro dia = traerDiaRetiroPorDiaSemana(fecha.getDayOfWeek().getValue());
+		DiaRetiro dia = traerDiaRetiroPorDiaSemana(fecha);
 		LocalTime horaInicio = dia.getHoraDesde();
 		
 		while( horaInicio.isBefore(dia.getHoraHasta()) ){ //COMPRUEBA SI LA HORA DE INICIO ES SUPERIO A LA HORA MAXIMA HASTA CUANDO SE ERMITE ENTREGAR TURNOS LIBRES
 			lstTurnosLibres.add(new Turno(fecha, horaInicio, false)); //Agrego un turno libre con la fecha mandada por parametro y la hora praviamente comprobada que no supera la hora maxima
 			horaInicio = horaInicio.plusHours( dia.getIntervalo());	//LE SUMO EL INTERVALO DE HORAS PARA CADA TURNO
 		}
-		return lstTurnosLibres;
+		
+		ArrayList<Turno> turnosLibres= new ArrayList<Turno>();
+		
+		for(Turno turnoOcupado : traerTurnosOcupados(fecha)) {
+			for (Turno turnoLibre : lstTurnosLibres) {
+				if(turnoOcupado.getHora().equals(turnoLibre.getHora())) {
+					lstTurnosLibres.remove(new Turno(fecha,turnoLibre.getHora(),false));
+				}
+			}
+		}
+		return turnosLibres;
 	}
 	
-	public DiaRetiro traerDiaRetiroPorDiaSemana(int diaSemana) {
+	public DiaRetiro traerDiaRetiroPorDiaSemana(LocalDate diaSemana) {
+		int diaSemanaNum = diaSemana.getDayOfWeek().getValue();
 		DiaRetiro dia = null;
 		for (DiaRetiro diaRetiro : lstDiaRetiro) {
-			if(diaRetiro.getDiaSemana() == diaSemana) {
+			if(diaRetiro.getDiaSemana() == diaSemanaNum) {
 				dia = diaRetiro;
 			}
 		}
@@ -254,7 +266,75 @@ public class Comercio extends Actor {
 	}
 
 	
+	public ArrayList<Turno> traerTurnosOcupados(LocalDate fecha) {
+		ArrayList<Turno> turnosOcupados= new ArrayList<Turno>();
+		for(Carrito car : lstCarrito) {
+			if(car.getEntrega().getFecha().equals(fecha) && car.getEntrega()instanceof RetiroLocal) {
+				turnosOcupados.add(new Turno(fecha, ((RetiroLocal)car.getEntrega()).getHoraEntrega(), true)); 
+			}
+		}
+		return turnosOcupados;
+	}
 	
 	
-
+	public ArrayList<Turno> traerTurnosLibres(LocalDate fecha){
+		ArrayList<Turno> turnosLibres = new ArrayList<Turno>();
+		boolean cargado = false;
+		boolean agregado = false;
+		List<Turno> turnosOcupados = traerTurnosOcupados(fecha);
+		DiaRetiro dia = traerDiaRetiroPorDiaSemana(fecha);
+		LocalTime horaCondicion = dia.getHoraDesde();
+		long hora = (long) dia.getIntervalo();
+		
+		while(cargado == false) {
+			for(Turno t : turnosOcupados) {
+				if(t.getHora().equals(horaCondicion)) {
+					agregado = true;
+				}
+			}
+			if(!agregado) {
+				turnosLibres.add(new Turno(fecha,horaCondicion,false));
+			}
+			
+			
+		}
+		return turnosLibres;
+	}
+	
+	
+	public  ArrayList<Turno> generarAgenda (LocalDate fecha){
+		
+		
+		
+		
+		return null;	
+	}
+	
+	
+	public void nuevoRetiroLocal(int idCarrito, boolean efectivo, LocalTime horaEntrega) throws Exception {
+		
+		if (this.lstCarrito.get(idCarrito).getEntrega() != null) {
+			throw new Exception("Ya existe una entrega con envio");
+		}
+		if ( horaEntrega.isAfter( traerDiaRetiroPorDiaSemana(this.lstCarrito.get(idCarrito).getFecha()).getHoraHasta()) ) {
+			throw new Exception("No se permite entregas a esa hora");
+		}
+		if ( horaEntrega.isBefore( traerDiaRetiroPorDiaSemana(this.lstCarrito.get(idCarrito).getFecha()).getHoraHasta()) ) {
+			throw new Exception("No se permite entregas a esa hora");
+		}
+		
+		
+		for (Carrito carrito : lstCarrito) {
+			if ( ((RetiroLocal)carrito.getEntrega()).getHoraEntrega().equals(horaEntrega)) {
+				throw new Exception("el turno esta ocupado");	
+			}
+		}
+			
+		lstCarrito.get(idCarrito).setEntrega(new RetiroLocal(lstCarrito.get(idCarrito).getFecha(), efectivo, horaEntrega ));
+		
+	}
+	
+	
+	
+	
 }

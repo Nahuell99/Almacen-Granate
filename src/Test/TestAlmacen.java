@@ -85,7 +85,10 @@ public class TestAlmacen {
 
 
 			comercio.traerCarritoId(1).nuevaEntrega(turnosHoy, true);
-			comercio.traerCarritoId(2).nuevaEntrega(turnosHoy, false, LocalTime.of(12, 00));
+			comercio.nuevoRetiroLocal(2, false, LocalTime.of(06, 00));
+			
+			System.out.println(comercio.generarAgenda(LocalDate.now()));
+			
 
 			
 			int i = 0;
