@@ -350,4 +350,9 @@ public class Comercio extends Actor {
 		}
 		return agendaCompleta;
 	}
+	
+	public LocalTime traerHoraRetiro(LocalDate fecha) {
+		ArrayList<Turno> turnosLibres = traerTurnosLibres(fecha);
+	return turnosLibres.get(0).getHora();
+	}
 }

@@ -116,8 +116,7 @@ public class Carrito {
 			if (lstItemCarrito.get(i).getArticulo().equals(articuloNuevo)) {
 
 				lstItemCarrito.get(i).setCantidad(lstItemCarrito.get(i).getCantidad() + cantidad);
-				System.out.print("Producto existente, " + cantidad + " unidades agregadas. Total: "
-						+ lstItemCarrito.get(i).getCantidad() + ". " + articuloNuevo);
+
 
 				encontrado = true;
 			}
@@ -125,7 +124,6 @@ public class Carrito {
 		} // SI NO FUE ENCONTRADO LO AGREGA
 		if (!encontrado) {
 
-			System.out.print("Producto no existente, unidades agregadas. " + articuloNuevo);
 			lstItemCarrito.add(new ItemCarrito(articuloNuevo, cantidad));
 
 			encontrado = true;
